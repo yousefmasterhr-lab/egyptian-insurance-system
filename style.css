@@ -615,21 +615,25 @@ body {
 
     html,
     body {
-        width: 100% !important;
+        width: 210mm !important;
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        overflow: hidden !important;
+        overflow: visible !important;
     }
 
     .modern-nav,
     .modal-overlay,
     .sidebar,
     .top-navbar,
+    .mobile-top-bar,
+    .sidebar-backdrop,
     .no-print,
+    .page-copyright-footer,
+    .welcome-copyright-footer,
     #floating-action-bar,
     .form-hub-tabs,
     .live-editor-drawer,
@@ -649,12 +653,16 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
+        width: 210mm !important;
         height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
         border: none !important;
         box-shadow: none !important;
         gap: 0 !important;
         overflow: visible !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
     }
 
     .form-page-group.d-none {
@@ -666,23 +674,24 @@ body {
     .a4-page-s6,
     .a4-page-s6-back {
         width: 210mm !important;
-        height: 296.8mm !important;
+        height: 296mm !important;
         max-width: 210mm !important;
-        max-height: 296.8mm !important;
+        max-height: 296mm !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
         overflow: hidden !important;
+        position: relative !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        background-size: 210mm 296.8mm !important;
+        background-size: 210mm 296mm !important;
     }
 
-    /* صفحة الوجه: تفصل بعدها فقط */
+    /* صفحة الوجه: فاصل صفحة واحد فقط بعدها */
     .a4-page,
     .a4-page-s6 {
         page-break-after: always !important;
@@ -691,11 +700,11 @@ body {
         break-before: avoid !important;
     }
 
-    /* صفحة الظهر: تبدأ بصفحة جديدة ولا تفصل بعدها لتفادي أي صفحة بيضاء فارغة */
+    /* صفحة الظهر: تتبع صفحة الوجه مباشرة بدون فاصل إضافي ولا تفصل بعدها لتفادي أي صفحة بيضاء */
     .a4-page-back,
     .a4-page-s6-back {
-        page-break-before: always !important;
-        break-before: page !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
         margin-top: 0 !important;
@@ -971,25 +980,7 @@ body {
     color: var(--text-muted);
 }
 
-@media print {
-    @page {
-        size: A4 portrait;
-        margin: 0;
-    }
 
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .a4-page {
-        page-break-after: always;
-        break-after: page;
-    }
-}
 
 /* Floating Action Bar UI Fixes */
 .floating-action-bar {
