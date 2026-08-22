@@ -282,15 +282,30 @@ const appTourSteps = [
 
 let globalAppTour = null;
 window.startAppTour = function() {
+    // إخفاء شاشة الترحيب والتأكد من الانتقال إلى لوحة التحكم
+    const welcome = document.getElementById('welcomeLandingScreen');
+    if (welcome && !welcome.classList.contains('welcome-hidden')) {
+        if (typeof hideWelcomeScreen === 'function') hideWelcomeScreen();
+    }
+    if (typeof switchView === 'function') {
+        switchView('dashboard-view');
+    }
     if (!globalAppTour) {
         globalAppTour = new GuidedTour(appTourSteps);
     }
-    globalAppTour.start();
+    setTimeout(() => {
+        globalAppTour.start();
+    }, 150);
 };
 
-// بدء الجولة الإرشادية تلقائياً عند أول زيارة للموقع لشرح كيفية الاستخدام
+// بدء الجولة الإرشادية فقط عند الدخول للنظام (وليس فوق شاشة الترحيب)
 function checkFirstTimeOnboardingTour() {
     try {
+        const welcome = document.getElementById('welcomeLandingScreen');
+        // إذا كانت شاشة الترحيب معروضة، ننتظر حتى يضغط المستخدم على بدء الاستخدام
+        if (welcome && !welcome.classList.contains('welcome-hidden')) {
+            return;
+        }
         const hasCompleted = localStorage.getItem('insurance_app_tour_completed');
         if (!hasCompleted) {
             setTimeout(() => {
