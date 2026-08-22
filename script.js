@@ -735,128 +735,151 @@ function renderCompanyCard(grid, data, id) {
     grid.appendChild(card);
 }
 
+function renderCompanyDetailsModal(data, id) {
+    const attachments = data.attachments || [];
+    
+    let attachmentsHTML = '<div class="attachments-grid">';
+    if (attachments.length > 0) {
+        attachments.forEach((att, index) => {
+            attachmentsHTML += `
+                <div class="attachment-item">
+                    <button onclick="deleteAttachment('${id}', ${index})" class="attachment-delete-btn">&times;</button>
+                    <a href="${att.url}" target="_blank">
+                        <i class="fas fa-file-alt"></i>
+                        <div title="${att.name}">${att.name}</div>
+                    </a>
+                </div>
+            `;
+        });
+    } else {
+        attachmentsHTML += '<div class="no-attachments-msg">لا يوجد ملفات مرفوعة</div>';
+    }
+    attachmentsHTML += '</div>';
+
+    document.getElementById('detailsBody').innerHTML = `
+        <div class="modal-company-title-wrap">
+            <h3><i class="fas fa-building"></i> ${data.name || '-'}</h3>
+        </div>
+        <div class="company-details-grid">
+            <div>
+                <span class="detail-subtitle">كود الشركة</span>
+                <strong class="detail-val-accent">${data.code || '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">المدير المسؤول</span>
+                <strong class="detail-val">${data.manager || '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">رقم التأمينات</span>
+                <strong class="detail-val">${data.ins_num || '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">رقم المنشأة</span>
+                <strong class="detail-val">${data.fac_number || '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">نوع المنشأة</span>
+                <strong class="detail-val">${data.fac_type == '1' ? 'نمطي' : data.fac_type == '2' ? 'سيارة' : data.fac_type == '3' ? 'مركب صيد' : data.fac_type == '4' ? 'مخابز بلدية' : '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">الكيان القانوني</span>
+                <strong class="detail-val">${data.legal_entity || '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">السجل التجاري</span>
+                <strong class="detail-val">${data.comm_reg || '-'}</strong>
+            </div>
+            <div>
+                <span class="detail-subtitle">البطاقة الضريبية</span>
+                <strong class="detail-val">${data.tax_card || '-'}</strong>
+            </div>
+            <div style="grid-column: 1 / -1;">
+                <span class="detail-subtitle">العنوان</span>
+                <strong class="detail-val">${data.address || '-'}</strong>
+            </div>
+        </div>
+
+        <!-- Agent Section -->
+        <div class="agent-details-box">
+            <h4><i class="fas fa-user-tie"></i> بيانات المفوض / الموكل</h4>
+            <div class="agent-details-grid">
+                <div>
+                    <span class="detail-subtitle">اسم المفوض</span>
+                    <strong class="detail-val">${data.agent_name || '-'}</strong>
+                </div>
+                <div>
+                    <span class="detail-subtitle">صفته</span>
+                    <strong class="detail-val">${data.agent_title || '-'}</strong>
+                </div>
+                <div>
+                    <span class="detail-subtitle">الرقم القومي</span>
+                    <strong class="detail-val">${data.agent_nat_id || '-'}</strong>
+                </div>
+                <div>
+                    <span class="detail-subtitle">الرقم التأميني</span>
+                    <strong class="detail-val">${data.agent_ins_num || '-'}</strong>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <span class="detail-subtitle">الهاتف</span>
+                    <strong class="detail-val">${data.agent_phone || '-'}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="attachments-section-box">
+            <div class="attachments-header">
+                <h4><i class="fas fa-paperclip"></i> المرفقات</h4>
+                <button onclick="toggleUploadForm()" class="neu-btn btn-pill">
+                    <i class="fas fa-plus"></i> إضافة ملف
+                </button>
+            </div>
+            
+            <div id="uploadFormContainer" class="upload-form-box">
+                <div class="upload-form-flex">
+                    <input type="text" id="newAttachmentName" placeholder="تسمية الملف (مثال: سجل تجاري)" class="neu-input">
+                    <input type="text" id="newAttachmentFile" placeholder="ضع رابط الملف هنا (مثال: رابط من جوجل درايف)" class="neu-input">
+                    <button id="uploadAttachmentBtn" onclick="uploadCompanyAttachment('${id}')" class="neu-btn neu-btn-primary">حفظ الرابط</button>
+                </div>
+            </div>
+
+            ${attachmentsHTML}
+        </div>
+
+        <div class="modal-footer-action">
+            <button class="neu-btn neu-btn-primary btn-full-edit" onclick="closeCompanyDetailsModal(); openCompanyModal('${id}')">
+                <i class="fas fa-edit"></i> تعديل البيانات
+            </button>
+        </div>
+    `;
+}
+
 async function viewCompanyDetails(id) {
     document.getElementById('companyDetailsModal').style.display = 'flex';
     document.getElementById('detailsBody').innerHTML = '<div class="loading-spinner-box"><i class="fas fa-spinner fa-spin fa-2x"></i></div>';
+    
+    // فحص وضع الزائر / الوضع التجريبي
+    if (typeof isGuestMode !== 'undefined' && isGuestMode) {
+        let comp = null;
+        if (typeof guestData !== 'undefined' && guestData && guestData.companies) {
+            comp = guestData.companies.find(c => c.id === id);
+        }
+        if (!comp && typeof currentCompanies !== 'undefined' && currentCompanies) {
+            comp = currentCompanies.find(c => c.id === id);
+        }
+        if (comp) {
+            renderCompanyDetailsModal(comp, id);
+        } else {
+            document.getElementById('detailsBody').innerHTML = '<div style="color:red; text-align:center; padding: 20px;">لم يتم العثور على بيانات الشركة</div>';
+        }
+        return;
+    }
+
     try {
         const doc = await db.collection('companies').doc(id).get();
-        if(doc.exists) {
-            const data = doc.data();
-            const attachments = data.attachments || [];
-            
-            let attachmentsHTML = '<div class="attachments-grid">';
-            if (attachments.length > 0) {
-                attachments.forEach((att, index) => {
-                    attachmentsHTML += `
-                        <div class="attachment-item">
-                            <button onclick="deleteAttachment('${id}', ${index})" class="attachment-delete-btn">&times;</button>
-                            <a href="${att.url}" target="_blank">
-                                <i class="fas fa-file-alt"></i>
-                                <div title="${att.name}">${att.name}</div>
-                            </a>
-                        </div>
-                    `;
-                });
-            } else {
-                attachmentsHTML += '<div class="no-attachments-msg">لا يوجد ملفات مرفوعة</div>';
-            }
-            attachmentsHTML += '</div>';
-
-            document.getElementById('detailsBody').innerHTML = `
-                <div class="modal-company-title-wrap">
-                    <h3><i class="fas fa-building"></i> ${data.name || '-'}</h3>
-                </div>
-                <div class="company-details-grid">
-                    <div>
-                        <span class="detail-subtitle">كود الشركة</span>
-                        <strong class="detail-val-accent">${data.code || '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">المدير المسؤول</span>
-                        <strong class="detail-val">${data.manager || '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">رقم التأمينات</span>
-                        <strong class="detail-val">${data.ins_num || '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">رقم المنشأة</span>
-                        <strong class="detail-val">${data.fac_number || '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">نوع المنشأة</span>
-                        <strong class="detail-val">${data.fac_type == '1' ? 'نمطي' : data.fac_type == '2' ? 'سيارة' : data.fac_type == '3' ? 'مركب صيد' : data.fac_type == '4' ? 'مخابز بلدية' : '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">الكيان القانوني</span>
-                        <strong class="detail-val">${data.legal_entity || '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">السجل التجاري</span>
-                        <strong class="detail-val">${data.comm_reg || '-'}</strong>
-                    </div>
-                    <div>
-                        <span class="detail-subtitle">البطاقة الضريبية</span>
-                        <strong class="detail-val">${data.tax_card || '-'}</strong>
-                    </div>
-                    <div style="grid-column: 1 / -1;">
-                        <span class="detail-subtitle">العنوان</span>
-                        <strong class="detail-val">${data.address || '-'}</strong>
-                    </div>
-                </div>
-
-                <!-- Agent Section -->
-                <div class="agent-details-box">
-                    <h4><i class="fas fa-user-tie"></i> بيانات المفوض / الموكل</h4>
-                    <div class="agent-details-grid">
-                        <div>
-                            <span class="detail-subtitle">اسم المفوض</span>
-                            <strong class="detail-val">${data.agent_name || '-'}</strong>
-                        </div>
-                        <div>
-                            <span class="detail-subtitle">صفته</span>
-                            <strong class="detail-val">${data.agent_title || '-'}</strong>
-                        </div>
-                        <div>
-                            <span class="detail-subtitle">الرقم القومي</span>
-                            <strong class="detail-val">${data.agent_nat_id || '-'}</strong>
-                        </div>
-                        <div>
-                            <span class="detail-subtitle">الرقم التأميني</span>
-                            <strong class="detail-val">${data.agent_ins_num || '-'}</strong>
-                        </div>
-                        <div style="grid-column: 1 / -1;">
-                            <span class="detail-subtitle">الهاتف</span>
-                            <strong class="detail-val">${data.agent_phone || '-'}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="attachments-section-box">
-                    <div class="attachments-header">
-                        <h4><i class="fas fa-paperclip"></i> المرفقات</h4>
-                        <button onclick="toggleUploadForm()" class="neu-btn btn-pill">
-                            <i class="fas fa-plus"></i> إضافة ملف
-                        </button>
-                    </div>
-                    
-                    <div id="uploadFormContainer" class="upload-form-box">
-                        <div class="upload-form-flex">
-                            <input type="text" id="newAttachmentName" placeholder="تسمية الملف (مثال: سجل تجاري)" class="neu-input">
-                            <input type="text" id="newAttachmentFile" placeholder="ضع رابط الملف هنا (مثال: رابط من جوجل درايف)" class="neu-input">
-                            <button id="uploadAttachmentBtn" onclick="uploadCompanyAttachment('${id}')" class="neu-btn neu-btn-primary">حفظ الرابط</button>
-                        </div>
-                    </div>
-
-                    ${attachmentsHTML}
-                </div>
-
-                <div class="modal-footer-action">
-                    <button class="neu-btn neu-btn-primary btn-full-edit" onclick="closeCompanyDetailsModal(); openCompanyModal('${doc.id}')">
-                        <i class="fas fa-edit"></i> تعديل البيانات
-                    </button>
-                </div>
-            `;
+        if (doc.exists) {
+            renderCompanyDetailsModal(doc.data(), doc.id);
+        } else {
+            document.getElementById('detailsBody').innerHTML = '<div style="color:red; text-align:center; padding: 20px;">لم يتم العثور على بيانات الشركة</div>';
         }
     } catch(err) {
         document.getElementById('detailsBody').innerHTML = '<div style="color:red; text-align:center; padding: 20px;">حدث خطأ في جلب البيانات</div>';
