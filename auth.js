@@ -153,6 +153,10 @@ function initAuth() {
         if (user) {
             currentUser = user;
             isGuestMode = false;
+            try {
+                localStorage.setItem('insurance_user_cached', 'true');
+                document.documentElement.classList.add('has-cached-auth');
+            } catch(e) {}
             console.log("Logged in user:", user.email, user.uid);
             
             // إخفاء نافذة تسجيل الدخول وشاشة الترحيب فوراً
@@ -169,6 +173,10 @@ function initAuth() {
         } else {
             currentUser = null;
             isGuestMode = true;
+            try {
+                localStorage.removeItem('insurance_user_cached');
+                document.documentElement.classList.remove('has-cached-auth');
+            } catch(e) {}
             // مستخدم غير مسجل -> إظهار شاشة الترحيب الرئيسية
             showWelcomeScreen();
             updateUserUI();
@@ -465,6 +473,11 @@ async function sendRecoveryEmailToCurrent() {
 
 // 8. تسجيل الخروج
 async function handleLogout() {
+    try {
+        localStorage.removeItem('insurance_user_cached');
+        document.documentElement.classList.remove('has-cached-auth');
+    } catch(e) {}
+
     if (isGuestMode) {
         isGuestMode = false;
         currentUser = null;

@@ -7462,3 +7462,12 @@ html[data-theme="light"] .copyright-year {
         gap: 12px;
     }
 }
+
+/* منع وميض شاشة الترحيب للمستخدمين المسجلين مسبقاً */
+html.has-cached-auth #welcomeLandingScreen {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+

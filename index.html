@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام إدارة التأمينات المتكامل</title>
+    <!-- منع وميض شاشة الترحيب للمستخدمين المسجلين عند التحديث -->
+    <script>
+        (function() {
+            try {
+                var isCached = localStorage.getItem('insurance_user_cached') === 'true' || Object.keys(localStorage).some(function(k) { return k.indexOf('firebase:authUser:') === 0; });
+                if (isCached) {
+                    document.documentElement.classList.add('has-cached-auth');
+                }
+            } catch(e) {}
+        })();
+    </script>
     <!-- PWA & Mobile App Settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="style.css?v=3.5">
+    <link rel="stylesheet" href="style.css?v=3.6">
 </head>
 
 <body>
@@ -1979,12 +1990,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <!-- سكربتات التطبيق المنظمة والمترابطة -->
-    <script src="auth.js?v=3.3"></script>
-    <script src="occupations.js?v=3.3"></script>
-    <script src="operations.js?v=3.3"></script>
-    <script src="tour.js?v=3.3"></script>
-    <script src="dashboard.js?v=3.3"></script>
-    <script src="script.js?v=3.3"></script>
+    <script src="auth.js?v=3.6"></script>
+    <script src="occupations.js?v=3.6"></script>
+    <script src="operations.js?v=3.6"></script>
+    <script src="tour.js?v=3.6"></script>
+    <script src="dashboard.js?v=3.6"></script>
+    <script src="script.js?v=3.6"></script>
 
     <!-- حاوية التنبيهات Toast -->
     <div id="toast-container"></div>
