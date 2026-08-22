@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // دالة التحقق من تسجيل الدخول
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // دالة التحقق من أن المستخدم هو مدير النظام
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.email.lower() == 'admin@insurance.com';
+    }
+
+    // قواعد مجلدات المستخدمين الخاصة (عزل تام لكل مستخدم)
+    match /users/{userId}/{document=**} {
+      allow read, write: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+    }
+
+    // قواعد عامة للمجموعات
+    match /{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}

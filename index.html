@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة التأمينات المتكامل</title>
+    <!-- PWA & Mobile App Settings -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="التأمينات">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css?v=3.0">
+</head>
+
+<body>
+    <!-- ==========================================================================
+         شاشة الترحيب الرئيسية والمدخل الذكي (Welcome Hero Landing Screen)
+         ========================================================================== -->
+    <div id="welcomeLandingScreen" class="welcome-landing-screen no-print">
+        <!-- زر تبديل الوضع (داكن / فاتح) في شاشة الترحيب -->
+        <button type="button" class="welcome-theme-toggle" onclick="toggleTheme()" title="تغيير المظهر (داكن / فاتح)">
+            <i class="fas fa-moon" id="welcomeThemeIcon"></i>
+        </button>
+
+        <!-- خلفيات ضوئية متحركة -->
+        <div class="welcome-bg-glow glow-1"></div>
+        <div class="welcome-bg-glow glow-2"></div>
+        <div class="welcome-bg-glow glow-3"></div>
+
+        <div class="welcome-card-glass">
+            <!-- الشعار الرسمي للنظام مع هالة زجاجية دائرية متوهجة -->
+            <div class="welcome-logo-badge">
+                <img src="logo.png" alt="شعار نظام التأمينات الاجتماعية" class="welcome-logo-img">
+            </div>
+
+            <div class="welcome-badge-pill">
+                <i class="fas fa-shield-alt"></i> نظام إدارة التأمينات الاجتماعية
+            </div>
+
+            <h1 class="welcome-main-title">نظام إدارة التأمينات المتكامل</h1>
+            <p class="welcome-sub-title">
+                منظومة رقمية متطورة لإدارة المنشآت والعاملين، إصدار استمارات س١ وس٦ الرسمية بمطابقة تامة، وإدارة العمليات وتحليلات الأجور بدقة واحترافية.
+            </p>
+
+            <!-- كروت الميزات المصغرة بتصميم عصري وأيقونات مضيئة -->
+            <div class="welcome-features-grid">
+                <div class="welcome-feat-card">
+                    <div class="welcome-feat-icon icon-cyan"><i class="fas fa-chart-line"></i></div>
+                    <h4>تحليلات ومؤشرات ذكية</h4>
+                    <p>متابعة كتلة الأجور، معدلات الدوران والنمو والامتثال التأميني.</p>
+                </div>
+                <div class="welcome-feat-card">
+                    <div class="welcome-feat-icon icon-emerald"><i class="fas fa-file-contract"></i></div>
+                    <h4>استمارات س١ وس٦ الرسمية</h4>
+                    <p>طباعة وتصدير النماذج الحكومية بمطابقة تامة لشبكة المربعات.</p>
+                </div>
+                <div class="welcome-feat-card">
+                    <div class="welcome-feat-icon icon-violet"><i class="fas fa-edit"></i></div>
+                    <h4>التحرير المباشر</h4>
+                    <p>تعديل وتعبئة البيانات لحظياً مع الربط التلقائي بالاستمارة.</p>
+                </div>
+                <div class="welcome-feat-card">
+                    <div class="welcome-feat-icon icon-amber"><i class="fas fa-database"></i></div>
+                    <h4>قواعد البيانات وإكسيل</h4>
+                    <p>استيراد وتصدير سريع للشركات والموظفين مع فلاتر شاملة.</p>
+                </div>
+            </div>
+
+            <!-- أزرار الإجراءات الرئيسية -->
+            <div class="welcome-actions-wrap">
+                <button class="welcome-btn welcome-btn-start" onclick="handleStartFreshUserDirectly()">
+                    <div class="welcome-btn-content">
+                        <i class="fas fa-bolt"></i>
+                        <span>بدء الاستخدام مباشرة</span>
+                    </div>
+                    <span class="welcome-btn-badge">نظام جديد + جولة إرشادية</span>
+                </button>
+
+                <button class="welcome-btn welcome-btn-auth" onclick="handleOpenAuthFromWelcome()">
+                    <div class="welcome-btn-content">
+                        <i class="fas fa-user-shield"></i>
+                        <span>تسجيل الدخول / إنشاء حساب</span>
+                    </div>
+                    <span class="welcome-btn-badge-sub">أو تجربة الوضع التجريبي</span>
+                </button>
+            </div>
+
+            <!-- حقوق الملكية والتطوير (Copyright Footer) -->
+            <div class="welcome-copyright-footer">
+                <div class="copyright-author">Designed by <span class="author-highlight">Youssef Hegazy</span> <i class="fas fa-heart text-heart"></i></div>
+                <div class="copyright-year">© <span class="en-digits">2026</span> Egyptian Payroll System</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الشريط العلوي المخصص للهواتف والشاشات الصغيرة -->
+    <header class="mobile-top-bar no-print">
+        <button class="mobile-menu-btn" onclick="toggleMobileSidebar()" title="القائمة الرئيسية" aria-label="القائمة">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="mobile-brand-wrap">
+            <img src="logo.png" alt="شعار" class="mobile-logo-img">
+            <span class="mobile-brand-title">نظام التأمينات</span>
+        </div>
+        <div class="mobile-actions-wrap">
+            <button class="icon-round-btn" onclick="toggleTheme()" title="المظهر"><i class="fas fa-sun" id="mobileThemeIcon"></i></button>
+            <button class="icon-round-btn" onclick="showAuthModal()" title="الحساب"><i class="fas fa-user"></i></button>
+        </div>
+    </header>
+
+    <!-- غطاء خلفي للشاشات الصغيرة عند فتح القائمة -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop no-print" onclick="toggleMobileSidebar(false)"></div>
+
+    <div class="app-container">
+        
+        <!-- الشريط الجانبي والتنقل العلوي -->
+        <aside class="sidebar no-print" id="mainSidebar">
+            <div class="sidebar-logo-container">
+                <img src="logo.png" alt="شعار النظام" class="sidebar-logo-img">
+            </div>
+
+            <div class="nav-links-wrap">
+                <div class="nav-item active-nav" onclick="switchView('dashboard-view')">
+                    <i class="fas fa-chart-pie"></i> لوحة التحليلات
+                </div>
+                <div class="nav-item" onclick="switchView('companies-view')">
+                    <i class="fas fa-building"></i> إدارة الشركات
+                </div>
+                <div class="nav-item" onclick="switchView('employees-view')">
+                    <i class="fas fa-users"></i> جداول الموظفين
+                </div>
+                <div class="nav-item" onclick="switchView('form-hub-view')">
+                    <i class="fas fa-file-invoice"></i> مركز الاستمارات
+                </div>
+                <div class="nav-item" onclick="switchView('operations-view')">
+                    <i class="fas fa-tasks"></i> مركز العمليات
+                </div>
+                <div class="nav-item" onclick="switchView('settings-view')">
+                    <i class="fas fa-cog"></i> الإعدادات
+                </div>
+            </div>
+        
+            <div class="sidebar-actions-wrap">
+                <div class="user-profile-nav-wrap" id="userProfileNavBtn" onclick="toggleProfileDropdown()" title="الملف الشخصي وإدارة الحساب">
+                    <div class="user-avatar-circle" id="sidebarUserAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="user-display-name" id="sidebarUserName">تسجيل الدخول</span>
+                    <i class="fas fa-chevron-down profile-arrow-icon"></i>
+                </div>
+                <div class="icon-round-btn" id="tourStartBtn" onclick="startAppTour()" title="جولة إرشادية في النظام" aria-label="جولة إرشادية">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="icon-round-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تغيير المظهر" aria-label="تغيير المظهر">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            
+            <!-- شريط تنبيه الوضع التجريبي -->
+            <div id="guestModeBanner" class="guest-mode-banner d-none">
+                <span><i class="fas fa-exclamation-triangle banner-warning-icon"></i> أنت في <b>الوضع التجريبي (ضيف)</b> — البيانات المدخلة لن تُحفظ في السيرفر وستتلاشى عند التحديث.</span>
+                <button class="btn-banner-login" onclick="showAuthModal()"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول لحفظ بياناتك</button>
+            </div>
+            
+            <!-- شريط الإجراءات العائم الموحد لمركز الاستمارات -->
+            <div id="floating-action-bar" class="floating-action-bar-v2 no-print d-none">
+                
+                <!-- بحث الشركات -->
+                <div class="floating-search-wrap">
+                    <input type="text" id="search_company" class="floating-search-v2 floating-search-company" placeholder="ابحث عن شركة (اسم/كود)..." title="بحث عن شركة" aria-label="بحث عن شركة" autocomplete="off" oninput="handleCompanySearch(this.value)" onfocus="handleCompanySearch(this.value)">
+                    <div id="company_dropdown" class="custom-dropdown"></div>
+                </div>
+                
+                <!-- بحث الموظفين -->
+                <div class="floating-search-wrap">
+                    <input type="text" id="search_employee" class="floating-search-v2 floating-search-employee" placeholder="ابحث عن موظف..." title="بحث عن موظف" aria-label="بحث عن موظف" autocomplete="off" oninput="handleEmployeeSearch(this.value)" onfocus="handleEmployeeSearch(this.value)">
+                    <div id="employee_dropdown" class="custom-dropdown"></div>
+                </div>
+                
+                <!-- تفريغ الحقول -->
+                <button class="floating-btn-v2" onclick="clearFormFields()" title="تفريغ الحقول" aria-label="تفريغ الحقول">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+
+                <!-- فاصل -->
+                <div class="floating-divider-v2"></div>
+
+                <!-- وضع المعاينة والطباعة -->
+                <button id="tab-btn-print" class="floating-btn-v2" onclick="switchFormMode('print')" title="وضع المعاينة" aria-label="وضع المعاينة">
+                    <i class="fas fa-eye"></i>
+                </button>
+
+                <!-- وضع ضبط الإحداثيات -->
+                <button id="tab-btn-settings" class="floating-btn-v2" onclick="switchFormMode('settings')" title="وضع ضبط الإحداثيات" aria-label="وضع ضبط الإحداثيات">
+                    <i class="fas fa-tools"></i>
+                </button>
+
+                <!-- زر فتح/إغلاق لوحة نموذج إدخال البيانات -->
+                <button id="btn-toggle-live-editor" class="floating-btn-v2" onclick="toggleLiveEditorDrawer()" title="إظهار/إخفاء لوحة إدخال وتعديل البيانات" aria-label="إظهار/إخفاء لوحة إدخال وتعديل البيانات">
+                    <i class="fas fa-file-signature"></i>
+                </button>
+
+                <!-- فاصل -->
+                <div class="floating-divider-v2"></div>
+
+                <!-- طباعة -->
+                <button class="floating-btn-v2" onclick="window.print()" title="طباعة الاستمارة" aria-label="طباعة الاستمارة">
+                    <i class="fas fa-print"></i>
+                </button>
+
+                <!-- إجراءات وضع الإعدادات فقط -->
+                <div id="settings-actions" class="settings-actions-v2">
+                    <button class="floating-btn-v2 btn-warning-v2" onclick="createNewInput()" title="إضافة مربع إدخال جديد" aria-label="إضافة مربع إدخال جديد">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="floating-btn-v2 btn-primary-v2" onclick="saveCoordinates()" title="حفظ الإحداثيات" aria-label="حفظ الإحداثيات">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+
+                <!-- إجراءات وضع الطباعة -->
+                <div id="print-actions" class="d-none"></div>
+
+            </div>
+
+            <!-- 0. لوحة التحليلات والمؤشرات الذكية الشاملة (Executive Analytics Dashboard) -->
+            <section id="dashboard-view" class="app-view active-view no-print">
+                <div class="view-header-bar">
+                    <div class="view-title-group">
+                        <h2><i class="fas fa-chart-line view-title-icon"></i> لوحة التحليلات والمؤشرات الذكية</h2>
+                        <span class="view-subtitle-tag">تحليل بيانات مباشر ولحظي</span>
+                    </div>
+                    
+                    <div class="view-actions-group">
+                        <div class="dash-filter-wrap">
+                            <select id="dashCompanyFilter" class="neu-select-compact" onchange="handleDashboardCompanyChange(this.value)" title="تصفية حسب المنشأة">
+                                <option value="all">🏢 جميع الشركات (مجمّع)</option>
+                            </select>
+                        </div>
+                        <div class="dash-period-pills">
+                            <button class="dash-period-btn active-period" data-period="all" onclick="handleDashboardPeriodChange('all')">الكل</button>
+                            <button class="dash-period-btn" data-period="month" onclick="handleDashboardPeriodChange('month')">الشهر</button>
+                            <button class="dash-period-btn" data-period="quarter" onclick="handleDashboardPeriodChange('quarter')">الربع</button>
+                            <button class="dash-period-btn" data-period="year" onclick="handleDashboardPeriodChange('year')">العام</button>
+                        </div>
+                        <button class="neu-btn btn-excel" onclick="exportDashboardReport()" title="تصدير تقرير الإحصائيات Excel"><i class="fas fa-file-excel"></i> تصدير تقرير</button>
+                        <button class="neu-btn btn-pill" onclick="updateDashboardAnalytics()" title="تحديث المؤشرات"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+
+                <!-- شبكة بطاقات المؤشرات القيادية الذكية (Executive KPI Cards Grid) -->
+                <div class="dashboard-kpi-grid">
+                    <!-- 1. الشركات -->
+                    <div class="dash-kpi-card card-glow-cyan" onclick="switchView('companies-view')">
+                        <div class="dash-kpi-header">
+                            <div class="dash-kpi-icon-wrap icon-cyan">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <span class="dash-kpi-badge badge-cyan"><i class="fas fa-shield-alt"></i> معتمدة</span>
+                        </div>
+                        <div class="dash-kpi-body">
+                            <span class="dash-kpi-label">إجمالي الشركات المسجلة</span>
+                            <h3 class="dash-kpi-value" id="dashKpiCompanies">0</h3>
+                        </div>
+                        <div class="dash-kpi-footer">
+                            <span class="dash-kpi-subtext" id="dashKpiCompaniesSub">جاري تحميل البيانات...</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. القوى العاملة -->
+                    <div class="dash-kpi-card card-glow-blue" onclick="switchView('employees-view')">
+                        <div class="dash-kpi-header">
+                            <div class="dash-kpi-icon-wrap icon-blue">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="dash-kpi-badge badge-blue"><i class="fas fa-user-check"></i> مؤمن عليهم</span>
+                        </div>
+                        <div class="dash-kpi-body">
+                            <span class="dash-kpi-label">إجمالي القوى العاملة</span>
+                            <h3 class="dash-kpi-value" id="dashKpiEmployees">0</h3>
+                        </div>
+                        <div class="dash-kpi-footer">
+                            <span class="dash-kpi-subtext" id="dashKpiEmployeesSub">جاري تحميل البيانات...</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. كتلة الأجور التأمينية -->
+                    <div class="dash-kpi-card card-glow-emerald" onclick="switchView('employees-view')">
+                        <div class="dash-kpi-header">
+                            <div class="dash-kpi-icon-wrap icon-emerald">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <span class="dash-kpi-badge badge-emerald"><i class="fas fa-chart-line"></i> وعاء الاشتراك</span>
+                        </div>
+                        <div class="dash-kpi-body">
+                            <span class="dash-kpi-label">كتلة الأجور التأمينية (شهرياً)</span>
+                            <h3 class="dash-kpi-value" id="dashKpiTotalWage">0 ج.م</h3>
+                        </div>
+                        <div class="dash-kpi-footer">
+                            <span class="dash-kpi-subtext" id="dashKpiTotalWageSub">جاري الحساب...</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. مركز العمليات والطلبات -->
+                    <div class="dash-kpi-card card-glow-amber" onclick="switchView('operations-view')">
+                        <div class="dash-kpi-header">
+                            <div class="dash-kpi-icon-wrap icon-amber">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <span class="dash-kpi-badge badge-amber"><i class="fas fa-clock"></i> نشطة</span>
+                        </div>
+                        <div class="dash-kpi-body">
+                            <span class="dash-kpi-label">إجمالي المعاملات والطلبات</span>
+                            <h3 class="dash-kpi-value" id="dashKpiOperations">0</h3>
+                        </div>
+                        <div class="dash-kpi-footer">
+                            <span class="dash-kpi-subtext" id="dashKpiOperationsSub">جاري فحص الحالات...</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. مؤشر دوران العمالة والاستقالات (Turnover Rate) -->
+                    <div class="dash-kpi-card card-glow-rose" onclick="switchView('operations-view')">
+                        <div class="dash-kpi-header">
+                            <div class="dash-kpi-icon-wrap icon-rose">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <span class="dash-kpi-badge badge-rose"><i class="fas fa-user-minus"></i> دوران العمالة</span>
+                        </div>
+                        <div class="dash-kpi-body">
+                            <span class="dash-kpi-label">معدل دوران العمالة (Turnover)</span>
+                            <h3 class="dash-kpi-value" id="dashKpiTurnover">0.0%</h3>
+                        </div>
+                        <div class="dash-kpi-footer">
+                            <span class="dash-kpi-subtext" id="dashKpiTurnoverSub">س1 تعيين مقابل س6 استقالة</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. مؤشر الامتثال وجودة البيانات (Compliance Score) -->
+                    <div class="dash-kpi-card card-glow-purple">
+                        <div class="dash-kpi-header">
+                            <div class="dash-kpi-icon-wrap icon-purple">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <span class="dash-kpi-badge badge-purple"><i class="fas fa-database"></i> جودة السجلات</span>
+                        </div>
+                        <div class="dash-kpi-body">
+                            <span class="dash-kpi-label">مؤشر اكتمال وصحة البيانات</span>
+                            <h3 class="dash-kpi-value" id="dashKpiCompliance">100%</h3>
+                        </div>
+                        <div class="dash-kpi-footer">
+                            <span class="dash-kpi-subtext" id="dashKpiComplianceSub">ملفات مكتملة الشروط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شبكة الرسوم البيانية التفاعلية (Interactive Charts Grid) -->
+                <div class="dashboard-charts-grid">
+                    
+                    <!-- 1. مخطط حركة التعيينات والاستقالات -->
+                    <div class="dash-chart-card span-2">
+                        <div class="dash-chart-header">
+                            <div class="dash-chart-title">
+                                <i class="fas fa-chart-bar text-cyan"></i>
+                                <span>حركة التعيينات والاستقالات ودوران العمالة (س1 vs س6)</span>
+                            </div>
+                            <span class="dash-chart-tag">مقارنة شهرية تفاعلية</span>
+                        </div>
+                        <div class="dash-chart-body">
+                            <canvas id="chartTurnoverTrend"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 2. مخطط توزيع حالات العمليات -->
+                    <div class="dash-chart-card">
+                        <div class="dash-chart-header">
+                            <div class="dash-chart-title">
+                                <i class="fas fa-pie-chart text-amber"></i>
+                                <span>توزيع حالات العمليات والطلبات</span>
+                            </div>
+                        </div>
+                        <div class="dash-chart-body">
+                            <canvas id="chartOperationsStatus"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 3. كبرى الشركات حسب حجم العمالة -->
+                    <div class="dash-chart-card">
+                        <div class="dash-chart-header">
+                            <div class="dash-chart-title">
+                                <i class="fas fa-layer-group text-blue"></i>
+                                <span>أكبر المنشآت حسب عدد الموظفين</span>
+                            </div>
+                        </div>
+                        <div class="dash-chart-body">
+                            <canvas id="chartTopCompanies"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 4. شرائح الأجور التأمينية -->
+                    <div class="dash-chart-card">
+                        <div class="dash-chart-header">
+                            <div class="dash-chart-title">
+                                <i class="fas fa-money-bill-wave text-emerald"></i>
+                                <span>توزيع شرائح أجور الاشتراك</span>
+                            </div>
+                        </div>
+                        <div class="dash-chart-body">
+                            <canvas id="chartWageBrackets"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 5. المؤهلات الدراسية والديموغرافيا -->
+                    <div class="dash-chart-card">
+                        <div class="dash-chart-header">
+                            <div class="dash-chart-title">
+                                <i class="fas fa-graduation-cap text-purple"></i>
+                                <span>المؤهلات الدراسية للموظفين</span>
+                            </div>
+                        </div>
+                        <div class="dash-chart-body">
+                            <canvas id="chartQualifications"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شريط الإجراءات السريعة (Quick Action Bar) -->
+                <div class="dash-quick-actions-bar">
+                    <span class="quick-actions-title"><i class="fas fa-bolt text-warning"></i> إجراءات سريعة:</span>
+                    <div class="quick-actions-buttons">
+                        <button class="quick-action-btn" onclick="openCompanyModal()"><i class="fas fa-plus-circle text-cyan"></i> إضافة شركة</button>
+                        <button class="quick-action-btn" onclick="openEmployeeModal()"><i class="fas fa-user-plus text-blue"></i> إضافة موظف</button>
+                        <button class="quick-action-btn" onclick="if(typeof openNewOperationModal === 'function') openNewOperationModal('س1'); else switchView('operations-view');"><i class="fas fa-file-medical text-emerald"></i> تسجيل حركة س1</button>
+                        <button class="quick-action-btn" onclick="if(typeof openNewOperationModal === 'function') openNewOperationModal('س6'); else switchView('operations-view');"><i class="fas fa-file-excel text-rose"></i> تسجيل استقالة س6</button>
+                        <button class="quick-action-btn" onclick="switchView('form-hub-view')"><i class="fas fa-print text-amber"></i> طباعة استمارة س1</button>
+                    </div>
+                </div>
+
+                <!-- حقوق الملكية والتطوير -->
+                <div class="page-copyright-footer no-print">
+                    <div class="copyright-author">Designed by <span class="author-highlight">Youssef Hegazy</span> <i class="fas fa-heart text-heart"></i></div>
+                    <div class="copyright-year">© <span class="en-digits">2026</span> Egyptian Payroll System</div>
+                </div>
+            </section>
+
+            <!-- 1. شاشة إدارة الشركات -->
+            <section id="companies-view" class="app-view no-print">
+                <div class="view-header-bar">
+                    <div class="view-title-group">
+                        <h2><i class="fas fa-building view-title-icon"></i> إدارة الشركات</h2>
+                        <div class="expandable-search">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="companySearch" placeholder="بحث عن اسم الشركة..." title="بحث عن اسم الشركة" aria-label="بحث عن اسم الشركة" onkeyup="filterCompanies()">
+                        </div>
+                    </div>
+                    
+                    <div class="view-actions-group">
+                        <button class="neu-btn btn-excel" onclick="exportCompaniesToExcel()"><i class="fas fa-file-excel"></i> تصدير Excel</button>
+                        <button class="neu-btn neu-btn-success" onclick="openCompanyModal()"><i class="fas fa-plus"></i> إضافة شركة جديدة</button>
+                    </div>
+                </div>
+                <!-- كروت الشركات -->
+                <div id="companiesGrid" class="companies-grid">
+                    <!-- يتم حقن الكروت برمجياً -->
+                </div>
+
+                <!-- حقوق الملكية والتطوير -->
+                <div class="page-copyright-footer no-print">
+                    <div class="copyright-author">Designed by <span class="author-highlight">Youssef Hegazy</span> <i class="fas fa-heart text-heart"></i></div>
+                    <div class="copyright-year">© <span class="en-digits">2026</span> Egyptian Payroll System</div>
+                </div>
+            </section>
+
+            <!-- 2. شاشة جداول الموظفين -->
+            <section id="employees-view" class="app-view no-print">
+                <div class="view-header-bar">
+                    <div class="view-title-group">
+                        <h2><i class="fas fa-users view-title-icon"></i> قاعدة بيانات الموظفين</h2>
+                        <div class="expandable-search">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="employeeSearch" placeholder="ابحث بالاسم أو الرقم القومي..." title="ابحث بالاسم أو الرقم القومي" aria-label="ابحث بالاسم أو الرقم القومي" onkeyup="filterEmployees()">
+                        </div>
+                    </div>
+                    <div class="view-actions-group">
+                        <button class="neu-btn btn-excel" onclick="exportEmployeesToExcel()"><i class="fas fa-file-excel"></i> تصدير Excel</button>
+                        <button class="neu-btn btn-template" onclick="downloadEmployeeExcelTemplate()"><i class="fas fa-download"></i> تحميل نموذج فارغ</button>
+                        <label class="neu-btn neu-btn-warning btn-upload-label" title="استيراد موظفين من Excel">
+                            <i class="fas fa-upload"></i> استيراد من Excel
+                            <input type="file" id="employeeExcelUpload" accept=".xlsx, .xls" class="d-none" title="رفع ملف إكسيل للموظفين" aria-label="رفع ملف إكسيل للموظفين" onchange="importEmployeesFromExcel(event)">
+                        </label>
+                        <button class="neu-btn neu-btn-success" onclick="openEmployeeModal()"><i class="fas fa-user-plus"></i> إضافة موظف</button>
+                    </div>
+                </div>
+                
+                <!-- شريط تبويبات الأرشيف والحالة الوظيفية -->
+                <div class="emp-archive-bar mb-15">
+                    <div class="emp-archive-pills">
+                        <button class="emp-archive-btn active-archive" data-archive="active" onclick="setEmployeeArchiveFilter('active', this)">
+                            <i class="fas fa-user-check"></i> الموظفون على رأس العمل (<span id="empActiveCount">0</span>)
+                        </button>
+                        <button class="emp-archive-btn" data-archive="archived" onclick="setEmployeeArchiveFilter('archived', this)">
+                            <i class="fas fa-box-archive"></i> أرشيف المستقيلين ومنتهيي الخدمة (<span id="empArchivedCount">0</span>)
+                        </button>
+                        <button class="emp-archive-btn" data-archive="all" onclick="setEmployeeArchiveFilter('all', this)">
+                            <i class="fas fa-users"></i> جميع السجلات (<span id="empTotalCount">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- إحصائيات وفلاتر الشركات للموظفين -->
+                <div class="stat-cards-flex" id="employeesStats">
+                </div>
+                
+                <!-- كروت الموظفين -->
+                <div id="employeesGrid" class="companies-grid">
+                    <!-- يتم حقن كروت الموظفين برمجياً -->
+                </div>
+
+                <!-- حقوق الملكية والتطوير -->
+                <div class="page-copyright-footer no-print">
+                    <div class="copyright-author">Designed by <span class="author-highlight">Youssef Hegazy</span> <i class="fas fa-heart text-heart"></i></div>
+                    <div class="copyright-year">© <span class="en-digits">2026</span> Egyptian Payroll System</div>
+                </div>
+            </section>
+
+            <!-- 3. مركز العمليات -->
+            <section id="operations-view" class="app-view no-print">
+                <div class="view-header-bar">
+                    <div class="view-title-group">
+                        <h2><i class="fas fa-tasks view-title-icon"></i> مركز العمليات</h2>
+                        <div class="expandable-search">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="operationSearch" placeholder="ابحث في العمليات..." title="ابحث في العمليات" aria-label="ابحث في العمليات" onkeyup="filterOperations()">
+                        </div>
+                    </div>
+                    <div class="view-actions-group">
+                        <button class="neu-btn btn-excel" onclick="exportOperationsToExcel()"><i class="fas fa-file-excel"></i> تصدير Excel</button>
+                        <button class="neu-btn btn-template" onclick="downloadOperationsExcelTemplate()"><i class="fas fa-download"></i> تحميل نموذج فارغ</button>
+                        <label class="neu-btn neu-btn-warning btn-upload-label" title="استيراد عمليات من Excel">
+                            <i class="fas fa-upload"></i> استيراد من Excel
+                            <input type="file" id="operationExcelUpload" accept=".xlsx, .xls" class="d-none" title="رفع ملف إكسيل للعمليات" aria-label="رفع ملف إكسيل للعمليات" onchange="importOperationsFromExcel(event)">
+                        </label>
+                        <button class="neu-btn neu-btn-danger d-none" id="btnDeleteSelectedOperations" onclick="deleteSelectedOperations()"><i class="fas fa-trash-alt"></i> حذف المحدد</button>
+                        <button class="neu-btn neu-btn-success" onclick="openOperationModal()"><i class="fas fa-plus"></i> إضافة عملية</button>
+                    </div>
+                </div>
+
+                <!-- إحصائيات وفلاتر العمليات -->
+                <div class="stat-cards-grid" id="operationsStats">
+                    <div class="stat-card neu-card op-filter-card active-filter" data-filter="الكل" onclick="setOperationsFilter('الكل')">
+                        <h5 class="op-filter-total">الإجمالي</h5>
+                        <h3 class="op-filter-total" id="statOpTotal">0</h3>
+                    </div>
+                    <div class="stat-card neu-card op-filter-card" data-filter="انتظار" onclick="setOperationsFilter('انتظار')">
+                        <h5 class="op-filter-waiting">انتظار</h5>
+                        <h3 class="op-filter-waiting" id="statOpWaiting">0</h3>
+                    </div>
+                    <div class="stat-card neu-card op-filter-card" data-filter="قيد المراجعة" onclick="setOperationsFilter('قيد المراجعة')">
+                        <h5 class="op-filter-review">قيد المراجعة</h5>
+                        <h3 class="op-filter-review" id="statOpUnderReview">0</h3>
+                    </div>
+                    <div class="stat-card neu-card op-filter-card" data-filter="مكتمل" onclick="setOperationsFilter('مكتمل')">
+                        <h5 class="op-filter-complete">مكتمل</h5>
+                        <h3 class="op-filter-complete" id="statOpCompleted">0</h3>
+                    </div>
+                    <div class="stat-card neu-card op-filter-card" data-filter="مرفوض" onclick="setOperationsFilter('مرفوض')">
+                        <h5 class="op-filter-rejected">مرفوض</h5>
+                        <h3 class="op-filter-rejected" id="statOpRejected">0</h3>
+                    </div>
+                    <div class="stat-card neu-card op-filter-card" data-filter="مكرر" onclick="setOperationsFilter('مكرر')">
+                        <h5 class="op-filter-duplicate">مكرر</h5>
+                        <h3 class="op-filter-duplicate" id="statOpDuplicate">0</h3>
+                    </div>
+                </div>
+                
+                <div class="table-responsive-box">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="table-col-checkbox"><input type="checkbox" id="selectAllOperations" title="تحديد كل العمليات" aria-label="تحديد كل العمليات" onclick="toggleSelectAllOperations()"></th>
+                                <th>م</th>
+                                <th>كود الطلب</th>
+                                <th>رقم الوارد</th>
+                                <th>تاريخ الوارد</th>
+                                <th>نوع الطلب</th>
+                                <th>حالة الطلب</th>
+                                <th>الشركة</th>
+                                <th>الاسم</th>
+                                <th>الملاحظات</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="operationsTableBody">
+                            <!-- سيتم حقن العمليات هنا -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- حقوق الملكية والتطوير -->
+                <div class="page-copyright-footer no-print">
+                    <div class="copyright-author">Designed by <span class="author-highlight">Youssef Hegazy</span> <i class="fas fa-heart text-heart"></i></div>
+                    <div class="copyright-year">© <span class="en-digits">2026</span> Egyptian Payroll System</div>
+                </div>
+            </section>
+
+            <!-- 4. شاشة الإعدادات -->
+            <section id="settings-view" class="app-view no-print">
+                <div class="settings-grid">
+                    
+                    <div class="neu-card">
+                        <h3><i class="fas fa-file-signature view-title-icon"></i> إعدادات الاستمارات</h3>
+                        <p class="settings-card-desc">تهيئة وضبط أماكن الحقول (X, Y) للطباعة المباشرة على نماذج التأمينات.</p>
+                        <button class="neu-btn neu-btn-warning" onclick="switchView('form-hub-view'); switchFormMode('settings');"><i class="fas fa-tools"></i> الدخول لوضع التعديل</button>
+                    </div>
+
+                    <div class="neu-card">
+                        <h3><i class="fas fa-database view-title-icon"></i> إعدادات النظام</h3>
+                        <p class="settings-card-desc">إدارة الاتصال بقاعدة البيانات وحفظ النسخ الاحتياطية.</p>
+                        <button class="neu-btn" onclick="showNotification('قاعدة البيانات متصلة وجاهزة للعمل', 'info')"><i class="fas fa-cloud-download-alt"></i> فحص الاتصال السحابي</button>
+                    </div>
+
+                </div>
+
+                <!-- حقوق الملكية والتطوير -->
+                <div class="page-copyright-footer no-print">
+                    <div class="copyright-author">Designed by <span class="author-highlight">Youssef Hegazy</span> <i class="fas fa-heart text-heart"></i></div>
+                    <div class="copyright-year">© <span class="en-digits">2026</span> Egyptian Payroll System</div>
+                </div>
+            </section>
+
+            <!-- 5. شاشة مركز الاستمارات -->
+            <section id="form-hub-view" class="app-view">
+
+                <!-- تبويبات الاستمارات العلوية -->
+                <div class="form-hub-tabs no-print">
+                    <button class="neu-btn form-tab-active" id="tab_form_s1" onclick="switchActiveForm('s1')"><i class="fas fa-file-alt"></i> استمارة س١</button>
+                    <button class="neu-btn btn-disabled" disabled><i class="fas fa-file-alt"></i> استمارة س٢ (قريباً)</button>
+                    <button class="neu-btn" id="tab_form_s6" onclick="switchActiveForm('s6')"><i class="fas fa-file-alt"></i> استمارة س٦</button>
+                </div>
+
+                <div class="form-canvas-wrapper">
+                    <!-- A4 Pages Container -->
+                    <div class="form-canvas-stack">
+
+                        <!-- حاوية استمارة س1 (وجه وظهر) -->
+                        <div id="s1_form_container" class="form-page-group">
+                            <div class="a4-page">
+                                <input type="text" id="office_name" class="overlay-input" title="اسم المكتب" aria-label="اسم المكتب" value="">
+                                <input type="text" id="category_1" class="overlay-input" title="فئة 1" aria-label="فئة 1" value="">
+                                <input type="text" id="category_2" class="overlay-input" title="فئة 2" aria-label="فئة 2" value="">
+                                <input type="text" id="category_3" class="overlay-input" title="فئة 3" aria-label="فئة 3" value="">
+                                <input type="text" id="applicant_name" class="overlay-input" title="اسم مقدم الطلب" aria-label="اسم مقدم الطلب" value="">
+                                <input type="text" id="applicant_capacity" class="overlay-input" title="صفة مقدم الطلب" aria-label="صفة مقدم الطلب" value="">
+                                <input type="text" id="applicant_ins_num" class="overlay-input" maxlength="9" title="الرقم التأميني لمقدم الطلب" aria-label="الرقم التأميني لمقدم الطلب" value="">
+                                <input type="text" id="applicant_phone" class="overlay-input" maxlength="11" title="هاتف مقدم الطلب" aria-label="هاتف مقدم الطلب" value="">
+                                <input type="text" id="applicant_nat_id" class="overlay-input" maxlength="14" title="الرقم القومي لمقدم الطلب" aria-label="الرقم القومي لمقدم الطلب" value="">
+                                <input type="text" id="emp_ins_num" class="overlay-input" maxlength="9" title="الرقم التأميني للموظف" aria-label="الرقم التأميني للموظف" value="">
+                                <input type="text" id="emp_name" class="overlay-input" title="اسم الموظف" aria-label="اسم الموظف" value="">
+                                <input type="text" id="emp_nat_id" class="overlay-input" maxlength="14" title="الرقم القومي للموظف" aria-label="الرقم القومي للموظف" value="">
+                                <input type="text" id="emp_nationality" class="overlay-input" title="الجنسية" aria-label="الجنسية" value="">
+                                <input type="text" id="emp_qualification" class="overlay-input" title="المؤهل" aria-label="المؤهل" value="">
+                                <input type="text" id="emp_profession" class="overlay-input" title="المهنة" aria-label="المهنة" value="">
+                                <input type="text" id="emp_sub_date_day" class="overlay-input" maxlength="2" title="يوم بدء الاشتراك" aria-label="يوم بدء الاشتراك" value="">
+                                <input type="text" id="emp_sub_date_month" class="overlay-input" maxlength="2" title="شهر بدء الاشتراك" aria-label="شهر بدء الاشتراك" value="">
+                                <input type="text" id="emp_sub_date_year" class="overlay-input" maxlength="4" title="سنة بدء الاشتراك" aria-label="سنة بدء الاشتراك" value="">
+                                <input type="text" id="emp_sector" class="overlay-input" title="القطاع" aria-label="القطاع" value="">
+                                <input type="text" id="emp_sub_code" class="overlay-input" title="كود الاشتراك" aria-label="كود الاشتراك" value="">
+                                <input type="text" id="emp_duration_type" class="overlay-input" title="نوع المدة" aria-label="نوع المدة" value="">
+                                <input type="text" id="emp_wage_pounds" class="overlay-input" maxlength="4" title="أجر الاشتراك (جنيه)" aria-label="أجر الاشتراك" value="">
+                                <input type="text" id="emp_comp_wage_pounds" class="overlay-input" maxlength="4" title="الأجر الشامل (جنيه)" aria-label="الأجر الشامل" value="">
+                                <input type="text" id="emp_disability_start_day" class="overlay-input" maxlength="2" title="يوم بداية العجز" aria-label="يوم بداية العجز" value="">
+                                <input type="text" id="emp_disability_start_month" class="overlay-input" maxlength="2" title="شهر بداية العجز" aria-label="شهر بداية العجز" value="">
+                                <input type="text" id="emp_disability_start_year" class="overlay-input" maxlength="4" title="سنة بداية العجز" aria-label="سنة بداية العجز" value="">
+                                <input type="text" id="emp_disability_pct" class="overlay-input" title="نسبة العجز" aria-label="نسبة العجز" value="">
+                                <input type="text" id="emp_med_exam_yes" class="overlay-input" title="فحص طبي نعم" aria-label="فحص طبي نعم" value="">
+                                <input type="text" id="emp_med_exam_no" class="overlay-input" title="فحص طبي لا" aria-label="فحص طبي لا" value="">
+                                <input type="text" id="fac_type_1" class="overlay-input" title="نوع منشأة 1" aria-label="نوع منشأة 1" value="">
+                                <input type="text" id="fac_type_2" class="overlay-input" title="نوع منشأة 2" aria-label="نوع منشأة 2" value="">
+                                <input type="text" id="fac_type_3" class="overlay-input" title="نوع منشأة 3" aria-label="نوع منشأة 3" value="">
+                                <input type="text" id="fac_type_4" class="overlay-input" title="نوع منشأة 4" aria-label="نوع منشأة 4" value="">
+                                <input type="text" id="fac_name" class="overlay-input" title="اسم المنشأة" aria-label="اسم المنشأة" value="">
+                                <input type="text" id="fac_number" class="overlay-input" maxlength="9" title="رقم المنشأة" aria-label="رقم المنشأة" value="">
+                                <input type="text" id="res_building" class="overlay-input" title="رقم العقار" aria-label="رقم العقار" value="">
+                                <input type="text" id="res_street" class="overlay-input" title="الشارع" aria-label="الشارع" value="">
+                                <input type="text" id="res_village" class="overlay-input" title="القرية / المنطقة" aria-label="القرية أو المنطقة" value="">
+                                <input type="text" id="res_center" class="overlay-input" title="المركز / القسم" aria-label="المركز أو القسم" value="">
+                                <input type="text" id="res_gov" class="overlay-input" title="المحافظة" aria-label="المحافظة" value="">
+                                <input type="text" id="sig_insured" class="overlay-input" title="توقيع المؤمن عليه" aria-label="توقيع المؤمن عليه" value="">
+                                <input type="text" id="sig_phone" class="overlay-input" title="رقم الهاتف للتوقيع" aria-label="رقم الهاتف للتوقيع" value="">
+                                <input type="text" id="sig_date_day" class="overlay-input" maxlength="2" title="يوم التوقيع" aria-label="يوم التوقيع" value="">
+                                <input type="text" id="sig_date_month" class="overlay-input" maxlength="2" title="شهر التوقيع" aria-label="شهر التوقيع" value="">
+                                <input type="text" id="sig_date_year" class="overlay-input" maxlength="4" title="سنة التوقيع" aria-label="سنة التوقيع" value="">
+                            </div>
+
+                            <!-- ورقة الاستمارة (الظهر) -->
+                            <div class="a4-page-back">
+                                <input type="text" id="back_fac_name" class="overlay-input" title="اسم المنشأة في الإقرار" aria-label="اسم المنشأة في الإقرار" value="">
+                                <input type="text" id="back_fac_ins_num" class="overlay-input" title="رقم التأمين في الإقرار" aria-label="رقم التأمين في الإقرار" value="">
+                                <input type="text" id="back_fac_address" class="overlay-input" title="عنوان المنشأة في الإقرار" aria-label="عنوان المنشأة في الإقرار" value="">
+                                <input type="text" id="back_emp_name" class="overlay-input" title="اسم العامل في الإقرار" aria-label="اسم العامل في الإقرار" value="">
+                            </div>
+                        </div> <!-- End S1 Container -->
+
+                        <!-- حاوية استمارة س6 (وجه وظهر) -->
+                        <div id="s6_form_container" class="form-page-group d-none">
+                            <!-- ورقة استمارة س6 (الوجه) -->
+                            <div class="a4-page-s6">
+                                <!-- اسم المكتب -->
+                                <input type="text" id="s6_office_name" class="overlay-input" title="اسم المكتب" aria-label="اسم المكتب" value="">
+                                
+                                <!-- بيانات مقدم الطلب -->
+                                <input type="text" id="s6_applicant_name" class="overlay-input" title="اسم مقدم الطلب" aria-label="اسم مقدم الطلب" value="">
+                                <input type="text" id="s6_applicant_capacity" class="overlay-input" title="صفة مقدم الطلب" aria-label="صفة مقدم الطلب" value="">
+                                <input type="text" id="s6_applicant_ins_num" class="overlay-input" maxlength="9" title="الرقم التأميني لمقدم الطلب" aria-label="الرقم التأميني لمقدم الطلب" value="">
+                                <input type="text" id="s6_applicant_phone" class="overlay-input" maxlength="11" title="هاتف مقدم الطلب" aria-label="هاتف مقدم الطلب" value="">
+                                <input type="text" id="s6_applicant_nat_id" class="overlay-input" maxlength="14" title="الرقم القومي لمقدم الطلب" aria-label="الرقم القومي لمقدم الطلب" value="">
+                                
+                                <!-- بيانات المؤمن عليه -->
+                                <input type="text" id="s6_emp_ins_num" class="overlay-input" maxlength="9" title="الرقم التأميني للمؤمن عليه" aria-label="الرقم التأميني للمؤمن عليه" value="">
+                                <input type="text" id="s6_emp_name" class="overlay-input" title="اسم المؤمن عليه" aria-label="اسم المؤمن عليه" value="">
+                                <input type="text" id="s6_emp_nat_id" class="overlay-input" maxlength="14" title="الرقم القومي للمؤمن عليه" aria-label="الرقم القومي للمؤمن عليه" value="">
+                                <input type="text" id="s6_fac_number" class="overlay-input" maxlength="9" title="رقم المنشأة" aria-label="رقم المنشأة" value="">
+                                <input type="text" id="s6_fac_name" class="overlay-input" title="اسم المنشأة" aria-label="اسم المنشأة" value="">
+                                
+                                <!-- تاريخ وسبب انتهاء الاشتراك -->
+                                <input type="text" id="s6_exit_date_day" class="overlay-input" maxlength="2" title="يوم انتهاء الاشتراك" aria-label="يوم انتهاء الاشتراك" value="">
+                                <input type="text" id="s6_exit_date_month" class="overlay-input" maxlength="2" title="شهر انتهاء الاشتراك" aria-label="شهر انتهاء الاشتراك" value="">
+                                <input type="text" id="s6_exit_date_year" class="overlay-input" maxlength="4" title="سنة انتهاء الاشتراك" aria-label="سنة انتهاء الاشتراك" value="">
+                                <input type="text" id="s6_resignation_reason" class="overlay-input" title="سبب انتهاء الاشتراك" aria-label="سبب انتهاء الاشتراك" value="">
+                                
+                            </div>
+
+                            <!-- ورقة استمارة س6 (الظهر) -->
+                            <div class="a4-page-s6-back">
+                                <input type="text" id="s6_back_fac_name" class="overlay-input" title="اسم المنشأة في الإقرار" aria-label="اسم المنشأة في الإقرار" value="">
+                                <input type="text" id="s6_back_fac_ins_num" class="overlay-input" maxlength="9" title="الرقم التأميني للمنشأة في الإقرار" aria-label="الرقم التأميني للمنشأة في الإقرار" value="">
+                                <input type="text" id="s6_back_fac_address" class="overlay-input" title="عنوان المنشأة في الإقرار" aria-label="عنوان المنشأة في الإقرار" value="">
+                                <input type="text" id="s6_back_emp_name" class="overlay-input" title="اسم المؤمن عليه في الإقرار" aria-label="اسم المؤمن عليه في الإقرار" value="">
+                                <input type="text" id="s6_back_emp_ins_num" class="overlay-input" maxlength="9" title="الرقم التأميني للمؤمن عليه في الإقرار" aria-label="الرقم التأميني للمؤمن عليه في الإقرار" value="">
+                            </div>
+                        </div> <!-- End S6 Container -->
+
+                    </div> <!-- End A4 Pages Container -->
+
+                    <!-- لوحة اختيار صفة مقدم الطلب الكلاسيكية (قبل تفعيل لوحة الإدخال) -->
+                    <div id="applicantSelectorPanel" class="applicant-selector-panel no-print">
+                        <div class="selector-panel-title">
+                            <i class="fas fa-user-edit"></i> صفة مقدم الطلب
+                        </div>
+                        
+                        <label class="selector-radio-label">
+                            <input type="radio" name="applicant_type" value="employer" title="صاحب العمل" onchange="updateApplicantData()"> 
+                            صاحب العمل
+                        </label>
+                        
+                        <label class="selector-radio-label">
+                            <input type="radio" name="applicant_type" value="agent" title="المفوض / الوكيل" onchange="updateApplicantData()"> 
+                            المفوض / الوكيل
+                        </label>
+                        
+                        <label class="selector-radio-label">
+                            <input type="radio" name="applicant_type" value="employee" checked title="المؤمن عليه (مستفيد)" onchange="updateApplicantData()"> 
+                            المؤمن عليه (مستفيد)
+                        </label>
+
+                        <!-- خيارات خاصة باستمارة س1 -->
+                        <div id="s1_category_section">
+                            <div class="selector-panel-divider"></div>
+
+                            <div class="selector-panel-title">
+                                <i class="fas fa-layer-group"></i> الفئة
+                            </div>
+                            
+                            <label class="selector-radio-label">
+                                <input type="radio" name="category_type" value="1" checked title="عاملين لدى الغير" onchange="updateCategoryData()"> 
+                                عاملين لدى الغير
+                            </label>
+                            
+                            <label class="selector-radio-label">
+                                <input type="radio" name="category_type" value="2" title="أصحاب أعمال لهم منشآت" onchange="updateCategoryData()"> 
+                                أصحاب أعمال لهم منشآت
+                            </label>
+                            
+                            <label class="selector-radio-label">
+                                <input type="radio" name="category_type" value="3" title="العاملين بالمخابز" onchange="updateCategoryData()"> 
+                                العاملين بالمخابز
+                            </label>
+                        </div>
+
+                        <!-- خيارات خاصة باستمارة س6 -->
+                        <div id="s6_reason_section" class="d-none">
+                            <div class="selector-panel-divider"></div>
+                            
+                            <div class="selector-panel-title">
+                                <i class="fas fa-sign-out-alt"></i> سبب إنهاء الخدمة
+                            </div>
+                            
+                            <select id="s6_quick_reason_select" class="neu-input" title="سبب انتهاء الخدمة" onchange="updateS6Reason(this.value)">
+                                <option value="استقالة">استقالة</option>
+                                <option value="انتهاء مدة العقد">انتهاء مدة العقد</option>
+                                <option value="بلوغ سن الشيخوخة">بلوغ سن الشيخوخة (التقاعد)</option>
+                                <option value="العجز الكامل المنهي للخدمة">العجز الكامل المنهي للخدمة</option>
+                                <option value="الوفاة">الوفاة</option>
+                                <option value="فسخ العقد / مادة 69">فسخ التعاقد (مادة 69)</option>
+                                <option value="إلغاء النشاط وتصفية المنشأة">إلغاء النشاط وتصفية المنشأة</option>
+                                <option value="الانقطاع عن العمل">الانقطاع عن العمل</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- لوحة نموذج إدخال وتعديل البيانات الحي (Live Manual Data Entry & Editor Panel) -->
+                    <div id="formLiveEditorDrawer" class="live-editor-drawer no-print d-none">
+                        
+                        <!-- الشريط العلوي للأزرار والإجراءات السريعة -->
+                        <div class="drawer-action-toolbar">
+                            <button class="drawer-tool-btn btn-tool-hire" onclick="fillDemoHireData()" title="تعبئة بيانات تعيين تجريبية (س1)">
+                                <i class="fas fa-bolt"></i> تعيين تجريبي
+                            </button>
+                            <button class="drawer-tool-btn btn-tool-resign" onclick="fillDemoResignData()" title="تعبئة بيانات استقالة تجريبية (س6)">
+                                <i class="fas fa-bolt"></i> استقالة تجريبية
+                            </button>
+                            <button class="drawer-tool-btn btn-tool-clear" onclick="clearAllFormAndDrawerFields()" title="مسح وتفريغ كافة الحقول">
+                                <i class="fas fa-eraser"></i> مسح
+                            </button>
+                            <button class="drawer-tool-btn btn-tool-print" onclick="window.print()" title="طباعة الاستمارة فوراً">
+                                <i class="fas fa-print"></i> طباعة
+                            </button>
+                        </div>
+
+                        <!-- عنوان اللوحة والوصف -->
+                        <div class="drawer-header-wrap">
+                            <h3 class="drawer-title"><i class="fas fa-file-signature"></i> نموذج إدخال وتعديل البيانات</h3>
+                            <p class="drawer-subtitle">قم بتعبئة أو تعديل الحقول لتحديث الاستمارة المطبوعة فوراً ولحظياً.</p>
+                        </div>
+
+                        <div class="drawer-scroll-body">
+                            
+                            <!-- 1. كارت بيانات الشركة والمنشأة -->
+                            <div class="drawer-card">
+                                <div class="drawer-card-header">
+                                    <div class="drawer-card-title">
+                                        <i class="fas fa-building"></i> بيانات الشركة والمؤسسة
+                                    </div>
+                                    <span class="drawer-badge badge-shared">مشترك</span>
+                                </div>
+                                
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">اختر الشركة المسجلة (Company):</label>
+                                    <select id="live_company_select" class="neu-input drawer-input" title="اختر الشركة" onchange="handleLiveCompanySelect(this.value)">
+                                        <option value="">-- اختر شركة للتحميل التلقائي --</option>
+                                    </select>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">اسم المنشأة / الشركة:</label>
+                                    <input type="text" id="live_fac_name" class="neu-input drawer-input" placeholder="مثال: شركة الأفق للتجارة والمقاولات" title="اسم المنشأة" aria-label="اسم المنشأة" oninput="syncLiveInput('fac_name', this.value)">
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">رقم المنشأة التأميني (9 أرقام):</label>
+                                        <input type="text" id="live_fac_number" class="neu-input drawer-input text-center" maxlength="9" placeholder="مثال: 123456789" title="رقم المنشأة التأميني" aria-label="رقم المنشأة التأميني" oninput="syncLiveInput('fac_number', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">اسم المكتب التأميني:</label>
+                                        <input type="text" id="live_office_name" class="neu-input drawer-input" placeholder="مثال: مكتب تأمينات المعادي" title="اسم المكتب التأميني" aria-label="اسم المكتب التأميني" oninput="syncLiveInput('office_name', this.value)">
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">مقر وعنوان الشركة الرئيسي:</label>
+                                    <input type="text" id="live_fac_address" class="neu-input drawer-input" placeholder="مثال: 15 شارع الثورة، مصر الجديدة، القاهرة" title="عنوان المنشأة" aria-label="عنوان المنشأة" oninput="syncLiveInput('fac_address', this.value)">
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">رئيس مجلس الإدارة / المدير المسؤول:</label>
+                                        <input type="text" id="live_manager_name" class="neu-input drawer-input" placeholder="مثال: أحمد محمود إبراهيم" title="رئيس مجلس الإدارة" aria-label="رئيس مجلس الإدارة" oninput="syncLiveInput('manager_name', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">هاتف المدير / المسؤول:</label>
+                                        <input type="text" id="live_manager_phone" class="neu-input drawer-input text-center" maxlength="11" placeholder="مثال: 01000000001" title="هاتف المدير المسؤول" aria-label="هاتف المدير المسؤول" oninput="syncLiveInput('manager_phone', this.value)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. كارت بيانات الموظف الأساسية -->
+                            <div class="drawer-card">
+                                <div class="drawer-card-header">
+                                    <div class="drawer-card-title">
+                                        <i class="fas fa-user-tie"></i> بيانات الموظف الأساسية
+                                    </div>
+                                    <span class="drawer-badge badge-shared">مشترك</span>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">اختر الموظف المسجل (Employee):</label>
+                                    <select id="live_employee_select" class="neu-input drawer-input" title="اختر الموظف" onchange="handleLiveEmployeeSelect(this.value)">
+                                        <option value="">-- اختر موظفاً للتحميل التلقائي --</option>
+                                    </select>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">اسم الموظف (رباعي):</label>
+                                    <input type="text" id="live_emp_name" class="neu-input drawer-input" placeholder="مثال: أحمد محمود علي إبراهيم" title="اسم الموظف رباعي" aria-label="اسم الموظف رباعي" oninput="syncLiveInput('emp_name', this.value)">
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">الرقم القومي (14 رقم):</label>
+                                        <input type="text" id="live_emp_nat_id" class="neu-input drawer-input text-center font-mono" maxlength="14" placeholder="29001010101010" title="الرقم القومي للموظف" aria-label="الرقم القومي للموظف" oninput="syncLiveInput('emp_nat_id', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">الرقم التأميني (9 أرقام):</label>
+                                        <input type="text" id="live_emp_ins_num" class="neu-input drawer-input text-center font-mono" maxlength="9" placeholder="123456789" title="الرقم التأميني للموظف" aria-label="الرقم التأميني للموظف" oninput="syncLiveInput('emp_ins_num', this.value)">
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">المهنة / المسمى الوظيفي:</label>
+                                        <input type="text" id="live_emp_profession" class="neu-input drawer-input" placeholder="مثال: فني صيانة ميكانيكية" title="المهنة والمسمى الوظيفي" aria-label="المهنة والمسمى الوظيفي" oninput="syncLiveInput('emp_profession', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">المؤهل العلمي والتخصص:</label>
+                                        <input type="text" id="live_emp_qualification" class="neu-input drawer-input" placeholder="مثال: دبلوم صنايع فني" title="المؤهل العلمي والتخصص" aria-label="المؤهل العلمي والتخصص" oninput="syncLiveInput('emp_qualification', this.value)">
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">الجنسية والديانة:</label>
+                                        <input type="text" id="live_emp_nationality" class="neu-input drawer-input" value="مصري" placeholder="مصري" title="الجنسية والديانة" aria-label="الجنسية والديانة" oninput="syncLiveInput('emp_nationality', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">رقم الهاتف المحمول:</label>
+                                        <input type="text" id="live_emp_phone" class="neu-input drawer-input text-center" maxlength="11" placeholder="مثال: 01100000001" title="رقم الهاتف المحمول" aria-label="رقم الهاتف المحمول" oninput="syncLiveInput('emp_phone', this.value)">
+                                    </div>
+                                </div>
+
+                                <!-- تفاصيل العنوان -->
+                                <div class="drawer-subcard">
+                                    <div class="drawer-subcard-title"><i class="fas fa-map-marker-alt"></i> محل الإقامة بالتفصيل:</div>
+                                    <div class="drawer-field-row">
+                                        <div class="drawer-field-group drawer-field-sm">
+                                            <label class="drawer-label">عقار رقم:</label>
+                                            <input type="text" id="live_res_building" class="neu-input drawer-input text-center" placeholder="8" title="رقم العقار" aria-label="رقم العقار" oninput="syncLiveInput('res_building', this.value)">
+                                        </div>
+                                        <div class="drawer-field-group flex-1">
+                                            <label class="drawer-label">الشارع:</label>
+                                            <input type="text" id="live_res_street" class="neu-input drawer-input" placeholder="شارع الجمهورية" title="اسم الشارع" aria-label="اسم الشارع" oninput="syncLiveInput('res_street', this.value)">
+                                        </div>
+                                        <div class="drawer-field-group flex-1">
+                                            <label class="drawer-label">القرية / المنطقة:</label>
+                                            <input type="text" id="live_res_village" class="neu-input drawer-input" placeholder="المنطقة الأولى" title="القرية أو المنطقة" aria-label="القرية أو المنطقة" oninput="syncLiveInput('res_village', this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="drawer-field-row">
+                                        <div class="drawer-field-group flex-1">
+                                            <label class="drawer-label">المركز / القسم:</label>
+                                            <input type="text" id="live_res_center" class="neu-input drawer-input" placeholder="مدينة نصر" title="المركز أو القسم" aria-label="المركز أو القسم" oninput="syncLiveInput('res_center', this.value)">
+                                        </div>
+                                        <div class="drawer-field-group flex-1">
+                                            <label class="drawer-label">المحافظة:</label>
+                                            <input type="text" id="live_res_gov" class="neu-input drawer-input" placeholder="القاهرة" title="المحافظة" aria-label="المحافظة" oninput="syncLiveInput('res_gov', this.value)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. كارت بيانات التعيين والتعاقد (خاص باستمارة س1) -->
+                            <div class="drawer-card drawer-card-s1">
+                                <div class="drawer-card-header">
+                                    <div class="drawer-card-title">
+                                        <i class="fas fa-user-plus text-success"></i> بيانات التعيين والاشتراك
+                                    </div>
+                                    <span class="drawer-badge badge-hire">س 1 (تعيين)</span>
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">تاريخ بدء الاشتراك (التعيين):</label>
+                                        <input type="date" id="live_sub_date" class="neu-input drawer-input text-center" title="تاريخ بدء الاشتراك" aria-label="تاريخ بدء الاشتراك" onchange="syncLiveDate('sub_date', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">نوع مدة العقد:</label>
+                                        <select id="live_emp_duration_type" class="neu-input drawer-input" title="نوع مدة العقد" onchange="syncLiveInput('emp_duration_type', this.value)">
+                                            <option value="نمطي">نمطي (دائم - كود 1)</option>
+                                            <option value="مؤقت">مؤقت (محدد المدة - كود 2)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">أجر الاشتراك التأميني (EGP):</label>
+                                        <input type="text" id="live_emp_wage" class="neu-input drawer-input text-center font-bold" placeholder="مثال: 3800" title="أجر الاشتراك التأميني" aria-label="أجر الاشتراك التأميني" oninput="syncLiveInput('emp_wage', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">الأجر الشامل (EGP):</label>
+                                        <input type="text" id="live_emp_comp_wage" class="neu-input drawer-input text-center font-bold" placeholder="مثال: 5200" title="الأجر الشامل" aria-label="الأجر الشامل" oninput="syncLiveInput('emp_comp_wage', this.value)">
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">القطاع:</label>
+                                    <input type="text" id="live_emp_sector" class="neu-input drawer-input" placeholder="مثال: خاص" title="القطاع" aria-label="القطاع" oninput="syncLiveInput('emp_sector', this.value)">
+                                </div>
+
+                                <!-- الفئة في س1 -->
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">الفئة الخاضعة للتأمين (س1):</label>
+                                    <div class="drawer-radio-group">
+                                        <label class="drawer-radio-pill">
+                                            <input type="radio" name="live_category_type" value="1" checked onchange="syncCategoryLive(this.value)"> عاملين لدى الغير (1)
+                                        </label>
+                                        <label class="drawer-radio-pill">
+                                            <input type="radio" name="live_category_type" value="2" onchange="syncCategoryLive(this.value)"> أصحاب أعمال (2)
+                                        </label>
+                                        <label class="drawer-radio-pill">
+                                            <input type="radio" name="live_category_type" value="3" onchange="syncCategoryLive(this.value)"> العاملين بالمخابز (3)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- بيانات العجز -->
+                                <div class="drawer-subcard">
+                                    <div class="drawer-subcard-title"><i class="fas fa-wheelchair"></i> بيانات العجز إن وجدت:</div>
+                                    <div class="drawer-field-row">
+                                        <div class="drawer-field-group drawer-field-md">
+                                            <label class="drawer-label">نسبة العجز (%):</label>
+                                            <input type="text" id="live_emp_disability_pct" class="neu-input drawer-input text-center" placeholder="5%" title="نسبة العجز" aria-label="نسبة العجز" oninput="syncLiveInput('emp_disability_pct', this.value)">
+                                        </div>
+                                        <div class="drawer-field-group flex-1">
+                                            <label class="drawer-label">تاريخ بداية العجز:</label>
+                                            <input type="date" id="live_emp_disability_date" class="neu-input drawer-input text-center" title="تاريخ بداية العجز" aria-label="تاريخ بداية العجز" onchange="syncLiveDate('disability_date', this.value)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. كارت بيانات إنهاء الخدمة والاستقالة (خاص باستمارة س6) -->
+                            <div class="drawer-card drawer-card-s6">
+                                <div class="drawer-card-header">
+                                    <div class="drawer-card-title">
+                                        <i class="fas fa-user-minus text-warning"></i> بيانات إنهاء الخدمة والاستقالة
+                                    </div>
+                                    <span class="drawer-badge badge-resign">س 6 (استقالة)</span>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">تاريخ انتهاء الخدمة / الاستقالة:</label>
+                                    <input type="date" id="live_exit_date" class="neu-input drawer-input text-center" title="تاريخ انتهاء الخدمة والاستقالة" aria-label="تاريخ انتهاء الخدمة والاستقالة" onchange="syncLiveDate('exit_date', this.value)">
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">سبب انتهاء الخدمة / الاستقالة:</label>
+                                    <select id="live_resignation_reason" class="neu-input drawer-input" title="سبب انتهاء الخدمة والاستقالة" onchange="syncLiveInput('resignation_reason', this.value)">
+                                        <option value="استقالة">استقالة</option>
+                                        <option value="انتهاء مدة العقد">انتهاء مدة العقد</option>
+                                        <option value="بلوغ سن الشيخوخة">بلوغ سن الشيخوخة (التقاعد)</option>
+                                        <option value="العجز الكامل المنهي للخدمة">العجز الكامل المنهي للخدمة</option>
+                                        <option value="الوفاة">الوفاة</option>
+                                        <option value="فسخ العقد / مادة 69">فسخ التعاقد (مادة 69)</option>
+                                        <option value="إلغاء النشاط وتصفية المنشأة">إلغاء النشاط وتصفية المنشأة</option>
+                                        <option value="الانقطاع عن العمل">الانقطاع عن العمل</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 5. كارت صفة مقدم الطلب والتوقيعات -->
+                            <div class="drawer-card">
+                                <div class="drawer-card-header">
+                                    <div class="drawer-card-title">
+                                        <i class="fas fa-user-check"></i> صفة مقدم الطلب والتوقيع
+                                    </div>
+                                    <span class="drawer-badge badge-shared">مشترك</span>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">صفة مقدم الطلب:</label>
+                                    <div class="drawer-radio-group">
+                                        <label class="drawer-radio-pill">
+                                            <input type="radio" name="live_applicant_type" value="employee" checked onchange="handleLiveApplicantTypeChange('employee')"> المؤمن عليه
+                                        </label>
+                                        <label class="drawer-radio-pill">
+                                            <input type="radio" name="live_applicant_type" value="employer" onchange="handleLiveApplicantTypeChange('employer')"> صاحب العمل
+                                        </label>
+                                        <label class="drawer-radio-pill">
+                                            <input type="radio" name="live_applicant_type" value="agent" onchange="handleLiveApplicantTypeChange('agent')"> المفوض / الوكيل
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-group">
+                                    <label class="drawer-label">اسم مقدم الطلب:</label>
+                                    <input type="text" id="live_applicant_name" class="neu-input drawer-input" placeholder="اسم مقدم الطلب" title="اسم مقدم الطلب" aria-label="اسم مقدم الطلب" oninput="syncLiveInput('applicant_name', this.value)">
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">الرقم التأميني لمقدم الطلب:</label>
+                                        <input type="text" id="live_applicant_ins_num" class="neu-input drawer-input text-center font-mono" maxlength="9" placeholder="الرقم التأميني" title="الرقم التأميني لمقدم الطلب" aria-label="الرقم التأميني لمقدم الطلب" oninput="syncLiveInput('applicant_ins_num', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">الرقم القومي لمقدم الطلب:</label>
+                                        <input type="text" id="live_applicant_nat_id" class="neu-input drawer-input text-center font-mono" maxlength="14" placeholder="الرقم القومي" title="الرقم القومي لمقدم الطلب" aria-label="الرقم القومي لمقدم الطلب" oninput="syncLiveInput('applicant_nat_id', this.value)">
+                                    </div>
+                                </div>
+
+                                <div class="drawer-field-row">
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">هاتف مقدم الطلب:</label>
+                                        <input type="text" id="live_applicant_phone" class="neu-input drawer-input text-center" maxlength="11" placeholder="هاتف مقدم الطلب" title="هاتف مقدم الطلب" aria-label="هاتف مقدم الطلب" oninput="syncLiveInput('applicant_phone', this.value)">
+                                    </div>
+                                    <div class="drawer-field-group flex-1">
+                                        <label class="drawer-label">تاريخ التحرير والتوقيع:</label>
+                                        <input type="date" id="live_sig_date" class="neu-input drawer-input text-center" title="تاريخ التحرير والتوقيع" aria-label="تاريخ التحرير والتوقيع" onchange="syncLiveDate('sig_date', this.value)">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- End drawer-scroll-body -->
+                    </div> <!-- End formLiveEditorDrawer -->
+                </div> <!-- End Flex Container -->
+            </section>
+        </main>
+    </div> <!-- End app-container -->
+
+    <!-- نافذة إضافة/تعديل العمليات -->
+    <div id="operationModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-medium">
+            <div class="modal-header-flex">
+                <h3 id="operationModalTitle" class="modal-header-title"><i class="fas fa-plus"></i> إضافة عملية جديدة</h3>
+                <button onclick="closeOperationModal()" class="neu-btn btn-pill" title="إغلاق النافذة">
+                    <i class="fas fa-times"></i> إغلاق
+                </button>
+            </div>
+            
+            <div class="modal-form-bg">
+                <form id="operationForm" onsubmit="saveOperation(event)">
+                    <input type="hidden" id="operationId">
+                    <input type="hidden" id="opEmployeeCode">
+                    
+                    <div class="form-grid-2col">
+                        <div class="form-group">
+                            <label for="operationSeqNum"><i class="fas fa-list-ol"></i> م (الرقم المسلسل)</label>
+                            <input type="text" id="operationSeqNum" class="neu-input text-center" title="الرقم المسلسل" placeholder="تلقائي" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="opRequestCode"><i class="fas fa-barcode"></i> كود الطلب</label>
+                            <input type="text" id="opRequestCode" class="neu-input" title="كود الطلب" placeholder="كود الطلب (تلقائي مع كود الموظف)" required>
+                        </div>
+                        <div class="form-group form-col-span-2">
+                            <label for="opName"><i class="fas fa-user"></i> اسم الموظف / صاحب الطلب <span id="opLinkedBadge" class="d-none badge-linked"><i class="fas fa-link"></i> مرتبط بالموظف</span></label>
+                            <div class="searchable-dropdown pos-relative">
+                                <input type="text" id="opName" class="neu-input" title="اسم صاحب الطلب" placeholder="ابحث باسم الموظف أو اكتب اسماً جديداً..." autocomplete="off" oninput="handleOpEmployeeInput(this.value)" onfocus="handleOpEmployeeInput(this.value)" required>
+                                <div id="opEmployeeDropdown" class="custom-dropdown"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="opIncomingNum"><i class="fas fa-hashtag"></i> رقم الوارد</label>
+                            <input type="text" id="opIncomingNum" class="neu-input" title="رقم الوارد" placeholder="رقم الوارد" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="opIncomingDate"><i class="fas fa-calendar-alt"></i> تاريخ الوارد</label>
+                            <input type="date" id="opIncomingDate" class="neu-input" title="تاريخ الوارد" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="opRequestType"><i class="fas fa-file-alt"></i> نوع الطلب</label>
+                            <input type="text" id="opRequestType" class="neu-input" title="نوع الطلب" placeholder="مثال: س1، تعديل أجر، س6..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="opRequestStatus"><i class="fas fa-info-circle"></i> حالة الطلب</label>
+                            <select id="opRequestStatus" class="neu-input" title="حالة الطلب" required>
+                                <option value="انتظار">انتظار</option>
+                                <option value="قيد المراجعة">قيد المراجعة</option>
+                                <option value="مكتمل">مكتمل</option>
+                                <option value="مرفوض">مرفوض</option>
+                                <option value="مكرر">مكرر</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-col-span-2">
+                            <label for="opCompany"><i class="fas fa-building"></i> الشركة</label>
+                            <select id="opCompany" class="neu-input" title="اختر الشركة" required>
+                                <option value="">اختر الشركة...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="opNotes"><i class="fas fa-comment-dots"></i> الملاحظات</label>
+                        <textarea id="opNotes" class="neu-input textarea-tall" title="ملاحظات إضافية" placeholder="ملاحظات إضافية حول العملية..."></textarea>
+                    </div>
+
+                    <div class="modal-footer-btns">
+                        <button type="button" class="neu-btn" onclick="closeOperationModal()">إلغاء</button>
+                        <button type="submit" class="neu-btn neu-btn-primary">حفظ البيانات <i class="fas fa-save"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة/تعديل الموظفين -->
+    <div id="employeeModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-medium">
+            <div class="modal-header-flex">
+                <h3 id="employeeModalTitle" class="modal-header-title"><i class="fas fa-user-plus"></i> إضافة موظف جديد</h3>
+                <button onclick="closeEmployeeModal()" class="neu-btn btn-pill" title="إغلاق النافذة">
+                    <i class="fas fa-times"></i> إغلاق
+                </button>
+            </div>
+            
+            <div class="modal-form-bg">
+                <form id="employeeForm" onsubmit="saveEmployee(event)">
+                    <input type="hidden" id="employeeId">
+                    
+                    <h4 class="form-section-title"><i class="fas fa-id-card"></i> البيانات الأساسية</h4>
+                    <div class="form-grid-2col">
+                        <div class="form-col-span-all form-group">
+                            <label for="empCompanyId" class="neu-label">الشركة التابع لها</label>
+                            <select id="empCompanyId" class="neu-input" title="اختر الشركة التابع لها الموظف">
+                                <!-- تملأ بالشركات ديناميكياً -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="empCode" class="neu-label">كود الموظف</label>
+                            <input type="text" id="empCode" class="neu-input" title="كود الموظف" placeholder="كود الموظف">
+                        </div>
+                        <div class="form-col-span-all form-group">
+                            <label for="empName" class="neu-label">الاسم الرباعي</label>
+                            <input type="text" id="empName" class="neu-input" title="الاسم الرباعي للموظف" placeholder="الاسم الرباعي" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="empNatId" class="neu-label">الرقم القومي (14 رقم)</label>
+                            <input type="text" id="empNatId" class="neu-input" title="الرقم القومي (14 رقم)" placeholder="الرقم القومي" required maxlength="14">
+                        </div>
+                        <div class="form-group">
+                            <label for="empInsNum" class="neu-label">الرقم التأميني</label>
+                            <input type="text" id="empInsNum" class="neu-input" title="الرقم التأميني" placeholder="الرقم التأميني">
+                        </div>
+                        <div class="form-col-span-all form-group">
+                            <label for="empMotherName" class="neu-label">اسم الأم</label>
+                            <input type="text" id="empMotherName" class="neu-input" title="اسم الأم" placeholder="اسم الأم">
+                        </div>
+                        <div class="form-col-span-all form-group">
+                            <label for="empQualification" class="neu-label">المؤهل</label>
+                            <input type="text" id="empQualification" class="neu-input" title="المؤهل الدراسي" placeholder="المؤهل الدراسي">
+                        </div>
+                        
+                        <div class="form-col-span-all form-grid-flex">
+                            <div class="form-group flex-1">
+                                <label for="empOccupationSearch" class="neu-label">المهنة</label>
+                                <div class="searchable-dropdown">
+                                    <input type="text" id="empOccupationSearch" class="neu-input" placeholder="ابحث عن المهنة..." title="ابحث عن المهنة" aria-label="ابحث عن المهنة" autocomplete="off">
+                                    <input type="hidden" id="empOccupation">
+                                    <div class="dropdown-list" id="occDropdownList"></div>
+                                </div>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="empOccupationCodeSearch" class="neu-label">كود المهنة</label>
+                                <div class="searchable-dropdown">
+                                    <input type="text" id="empOccupationCodeSearch" class="neu-input" placeholder="ابحث بكود المهنة..." title="ابحث بكود المهنة" aria-label="ابحث بكود المهنة" autocomplete="off">
+                                    <input type="hidden" id="empOccupationCode">
+                                    <div class="dropdown-list" id="codeDropdownList"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="empSubStartDate" class="neu-label">تاريخ بدأ الاشتراك</label>
+                            <input type="date" id="empSubStartDate" class="neu-input" title="تاريخ بدأ الاشتراك">
+                        </div>
+                        <div class="form-group">
+                            <label for="empDurationType" class="neu-label">نوع المدة</label>
+                            <input type="text" id="empDurationType" class="neu-input" title="نوع المدة" placeholder="نوع المدة">
+                        </div>
+                        <div class="form-group">
+                            <label for="empSubWage" class="neu-label">أجر / دخل الاشتراك</label>
+                            <input type="number" id="empSubWage" class="neu-input" title="أجر الاشتراك" placeholder="أجر الاشتراك">
+                        </div>
+                        <div class="form-group">
+                            <label for="empCompWage" class="neu-label">الأجر الشامل</label>
+                            <input type="number" id="empCompWage" class="neu-input" title="الأجر الشامل" placeholder="الأجر الشامل">
+                        </div>
+                    </div>
+                    
+                    <div class="form-dashed-divider"></div>
+                    <div class="form-col-span-all">
+                        <h4 class="form-section-title"><i class="fas fa-calendar-alt text-cyan"></i> التواريخ ودورة حياة الموظف</h4>
+                        <div class="emp-dates-grid">
+                            <div class="form-group emp-date-item">
+                                <label for="empHireDate" class="neu-label">تاريخ التعيين</label>
+                                <input type="date" id="empHireDate" class="neu-input" title="تاريخ التعيين">
+                            </div>
+                            <div class="form-group emp-date-item">
+                                <label for="empInsDate" class="neu-label">تاريخ التأمين الفعلي</label>
+                                <input type="date" id="empInsDate" class="neu-input" title="تاريخ التأمين الفعلي">
+                            </div>
+                            <div class="form-group emp-date-item">
+                                <label for="empResignationDate" class="neu-label">تاريخ الاستقالة</label>
+                                <input type="date" id="empResignationDate" class="neu-input" title="تاريخ الاستقالة أو إنهاء الخدمة">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-dashed-divider"></div>
+                    
+                    <div>
+                        <label class="form-checkbox-label">
+                            <input type="checkbox" id="empHasDisability" onchange="toggleDisabilityFields()" class="checkbox-custom" title="هل يوجد بيانات عجز">
+                            هل يوجد بيانات عجز للموظف؟
+                        </label>
+                    </div>
+                    
+                    <div id="disabilityFields" class="disability-fields-box d-none">
+                        <h4 class="disability-fields-title"><i class="fas fa-wheelchair"></i> بيانات العجز</h4>
+                        <div class="form-grid-2col">
+                            <div class="form-group">
+                                <label for="empDisabilityDate" class="neu-label">تاريخ بداية العجز</label>
+                                <input type="date" id="empDisabilityDate" class="neu-input" title="تاريخ بداية العجز">
+                            </div>
+                            <div class="form-group">
+                                <label for="empDisabilityPercent" class="neu-label">نسبة العجز (%)</label>
+                                <input type="number" id="empDisabilityPercent" class="neu-input" min="0" max="100" title="نسبة العجز" placeholder="نسبة العجز %">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-dashed-divider"></div>
+                    <h4 class="form-section-title"><i class="fas fa-map-marker-alt"></i> بيانات العنوان</h4>
+                    <div class="form-grid-3col">
+                        <div class="form-group">
+                            <label for="empGov" class="neu-label">المحافظة</label>
+                            <input type="text" id="empGov" class="neu-input" title="المحافظة" placeholder="المحافظة">
+                        </div>
+                        <div class="form-group">
+                            <label for="empCenter" class="neu-label">قسم / مركز</label>
+                            <input type="text" id="empCenter" class="neu-input" title="قسم أو مركز" placeholder="قسم / مركز">
+                        </div>
+                        <div class="form-group">
+                            <label for="empVillage" class="neu-label">قرية / منطقة</label>
+                            <input type="text" id="empVillage" class="neu-input" title="قرية أو منطقة" placeholder="قرية / منطقة">
+                        </div>
+                        <div class="form-col-span-all form-group">
+                            <label for="empStreet" class="neu-label">الشارع</label>
+                            <input type="text" id="empStreet" class="neu-input" title="اسم الشارع" placeholder="اسم الشارع">
+                        </div>
+                        <div class="form-group">
+                            <label for="empBuildingNo" class="neu-label">عقار رقم</label>
+                            <input type="text" id="empBuildingNo" class="neu-input" title="رقم العقار" placeholder="رقم العقار">
+                        </div>
+                        <div class="form-col-span-2-end form-group">
+                            <label for="empPhone" class="neu-label">رقم التليفون</label>
+                            <input type="text" id="empPhone" class="neu-input" title="رقم التليفون" placeholder="رقم التليفون">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="neu-btn neu-btn-success btn-full-width"><i class="fas fa-save"></i> حفظ بيانات الموظف</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نافذة عرض تفاصيل الموظف -->
+    <div id="employeeDetailsModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-wide">
+            <div class="modal-header-flex">
+                <h3 class="modal-header-title"><i class="fas fa-user"></i> بطاقة الموظف</h3>
+                <button onclick="document.getElementById('employeeDetailsModal').style.display='none'" class="neu-btn btn-pill" title="إغلاق النافذة">
+                    <i class="fas fa-times"></i> إغلاق
+                </button>
+            </div>
+            <div id="empDetailsBody"></div>
+        </div>
+    </div>
+
+    <!-- نافذة مسار وسجل طلبات الموظف والذهاب إليها في مركز العمليات -->
+    <div id="employeeOperationsTimelineModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-wide">
+            <div class="modal-header-flex">
+                <h3 class="modal-header-title">
+                    <i class="fas fa-tasks text-cyan"></i>
+                    سجل طلبات الموظف: <span id="opsModalEmpName" class="ops-modal-emp-name"></span>
+                </h3>
+                <button onclick="closeModal('employeeOperationsTimelineModal')" class="neu-btn btn-pill" title="إغلاق النافذة">
+                    <i class="fas fa-times"></i> إغلاق
+                </button>
+            </div>
+            <div id="opsModalBody" class="modal-body p-15"></div>
+        </div>
+    </div>
+    
+    <!-- نافذة إضافة/تعديل شركة -->
+    <div id="companyModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-medium">
+            <div class="modal-header-flex">
+                <h2 class="modal-header-title"><i class="fas fa-building view-title-icon"></i> <span id="companyModalTitle">إضافة شركة جديدة</span></h2>
+                <button class="neu-btn icon-round-btn" onclick="closeCompanyModal()" title="إغلاق"><i class="fas fa-times icon-danger"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyForm" onsubmit="saveCompany(event)">
+                    <input type="hidden" id="companyId">
+                    <div class="form-grid-2col">
+                        <div class="form-group">
+                            <label for="companyName" class="neu-label">اسم الشركة</label>
+                            <input type="text" id="companyName" class="neu-input" title="اسم الشركة" placeholder="اسم الشركة" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyCode" class="neu-label">كود الشركة</label>
+                            <input type="text" id="companyCode" class="neu-input" title="كود الشركة" placeholder="كود الشركة">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyManager" class="neu-label">المدير المسئول</label>
+                            <input type="text" id="companyManager" class="neu-input" title="المدير المسئول" placeholder="المدير المسئول" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyInsNum" class="neu-label">رقم التأمين</label>
+                            <input type="text" id="companyInsNum" class="neu-input" title="رقم التأمين" placeholder="رقم التأمين" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyFacNum" class="neu-label">رقم المنشأة</label>
+                            <input type="text" id="companyFacNum" class="neu-input" title="رقم المنشأة" placeholder="رقم المنشأة">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyFacType" class="neu-label">نوع المنشأة</label>
+                            <select id="companyFacType" class="neu-input" title="نوع المنشأة">
+                                <option value="">-- اختر --</option>
+                                <option value="1">نمطي</option>
+                                <option value="2">سيارة</option>
+                                <option value="3">مركب صيد</option>
+                                <option value="4">مخابز بلدية</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyLegalEntity" class="neu-label">الكيان القانوني</label>
+                            <input type="text" id="companyLegalEntity" class="neu-input" title="الكيان القانوني" placeholder="الكيان القانوني">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyCommReg" class="neu-label">رقم السجل التجاري</label>
+                            <input type="text" id="companyCommReg" class="neu-input" title="رقم السجل التجاري" placeholder="رقم السجل التجاري">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyTaxCard" class="neu-label">البطاقة الضريبية</label>
+                            <input type="text" id="companyTaxCard" class="neu-input" title="البطاقة الضريبية" placeholder="البطاقة الضريبية">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyOffice" class="neu-label">اسم المكتب</label>
+                            <input type="text" id="companyOffice" class="neu-input" title="اسم المكتب" placeholder="اسم المكتب">
+                        </div>
+                    </div>
+                    <div class="form-group mb-20">
+                        <label for="companyAddress" class="neu-label">عنوان الشركة</label>
+                        <input type="text" id="companyAddress" class="neu-input" title="عنوان الشركة" placeholder="عنوان الشركة">
+                    </div>
+                    
+                    <div class="form-dashed-divider"></div>
+                    <h4 class="form-section-title"><i class="fas fa-user-tie"></i> بيانات المدير / صاحب العمل</h4>
+                    
+                    <div class="form-grid-2col">
+                        <div class="form-group">
+                            <label for="companyManagerTitle" class="neu-label">صفة صاحب العمل</label>
+                            <input type="text" id="companyManagerTitle" class="neu-input" title="صفة صاحب العمل" placeholder="صفة صاحب العمل">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyManagerNatId" class="neu-label">الرقم القومي</label>
+                            <input type="text" id="companyManagerNatId" class="neu-input" title="الرقم القومي لصاحب العمل" placeholder="الرقم القومي" maxlength="14">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyManagerInsNum" class="neu-label">الرقم التأميني</label>
+                            <input type="text" id="companyManagerInsNum" class="neu-input" title="الرقم التأميني لصاحب العمل" placeholder="الرقم التأميني">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyManagerPhone" class="neu-label">رقم الهاتف</label>
+                            <input type="text" id="companyManagerPhone" class="neu-input" title="رقم الهاتف لصاحب العمل" placeholder="رقم الهاتف">
+                        </div>
+                    </div>
+
+                    <div class="form-dashed-divider"></div>
+                    <h4 class="form-section-title"><i class="fas fa-user-tie"></i> بيانات المفوض / الموكل</h4>
+                    
+                    <div class="form-grid-2col">
+                        <div class="form-group">
+                            <label for="agentName" class="neu-label">اسم المفوض</label>
+                            <input type="text" id="agentName" class="neu-input" title="اسم المفوض" placeholder="اسم المفوض">
+                        </div>
+                        <div class="form-group">
+                            <label for="agentTitle" class="neu-label">صفة المفوض</label>
+                            <input type="text" id="agentTitle" class="neu-input" title="صفة المفوض" placeholder="صفة المفوض">
+                        </div>
+                        <div class="form-group">
+                            <label for="agentNatId" class="neu-label">الرقم القومي للمفوض</label>
+                            <input type="text" id="agentNatId" class="neu-input" title="الرقم القومي للمفوض" placeholder="الرقم القومي" maxlength="14">
+                        </div>
+                        <div class="form-group">
+                            <label for="agentInsNum" class="neu-label">الرقم التأميني للمفوض</label>
+                            <input type="text" id="agentInsNum" class="neu-input" title="الرقم التأميني للمفوض" placeholder="الرقم التأميني">
+                        </div>
+                        <div class="form-col-span-all form-group">
+                            <label for="agentPhone" class="neu-label">رقم الهاتف</label>
+                            <input type="text" id="agentPhone" class="neu-input" title="رقم هاتف المفوض" placeholder="رقم الهاتف">
+                        </div>
+                    </div>
+                    <button type="submit" class="neu-btn neu-btn-success btn-full-width"><i class="fas fa-save"></i> حفظ البيانات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة عرض تفاصيل الشركة -->
+    <div id="companyDetailsModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-wide">
+            <div class="modal-header-flex">
+                <h2 class="modal-header-title"><i class="fas fa-info-circle view-title-icon"></i> بيانات الشركة</h2>
+                <button class="neu-btn icon-round-btn" onclick="closeCompanyDetailsModal()" title="إغلاق"><i class="fas fa-times icon-danger"></i></button>
+            </div>
+            <div id="detailsBody" class="modal-body">
+                <!-- يتم حقن تفاصيل الشركة برمجياً -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- نافذة عرض الكود (الإحداثيات) -->
+    <div id="codeModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-wide">
+            <div class="modal-header-flex">
+                <h2 class="modal-header-title"><i class="fas fa-code view-title-icon"></i> الكود المُستخرج للإحداثيات</h2>
+                <button class="neu-btn icon-round-btn" onclick="closeCodeModal()" title="إغلاق"><i class="fas fa-times icon-danger"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="settings-card-desc">قم بنسخ هذا الكود واستبداله في ملف index.html لتحفظ التغييرات نهائياً.</p>
+                <textarea id="output_code" class="code-output-textarea" title="كود الإحداثيات المستخرج" readonly></textarea>
+                <div class="text-left">
+                    <button class="neu-btn neu-btn-primary" onclick="copyCodeToClipboard()"><i class="fas fa-copy"></i> نسخ الكود</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة اختيار الاستمارة للموظف -->
+    <div id="employeeFormModal" class="modal-overlay no-print z-top">
+        <div class="modal-content modal-box-small text-center pos-relative">
+            <button onclick="document.getElementById('employeeFormModal').style.display='none'" class="neu-btn icon-round-btn btn-close-pos" title="إغلاق"><i class="fas fa-times"></i></button>
+            <h3 class="modal-header-title justify-center mb-20"><i class="fas fa-file-invoice"></i> طباعة الاستمارات</h3>
+            <div class="modal-stack-gap15">
+                <button class="neu-btn neu-btn-primary btn-large-pad" onclick="fillEmployeeForm('s1')"><i class="fas fa-print"></i> استمارة س 1 (التحاق بالعمل)</button>
+                <button class="neu-btn btn-disabled" disabled>استمارة س 2 (قريباً)</button>
+                <button class="neu-btn neu-btn-warning btn-large-pad" onclick="fillEmployeeForm('s6')"><i class="fas fa-file-invoice"></i> استمارة س 6 (إنهاء الخدمة والتسوية)</button>
+            </div>
+            <button onclick="document.getElementById('employeeFormModal').style.display='none'" class="neu-btn neu-btn-danger btn-full-width">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- نافذة خيارات العمليات والربط للموظف -->
+    <div id="employeeOperationChoiceModal" class="modal-overlay no-print z-top">
+        <div class="modal-content modal-box-small text-center pos-relative">
+            <button onclick="document.getElementById('employeeOperationChoiceModal').style.display='none'" class="neu-btn icon-round-btn btn-close-pos" title="إغلاق"><i class="fas fa-times"></i></button>
+            <h3 class="modal-header-title justify-center mb-20"><i class="fas fa-tasks"></i> خيارات الطلبات والعمليات</h3>
+            <p class="settings-card-desc mb-20">هل تريد ربط الموظف بطلب موجود بالفعل أم إنشاء طلب جديد بالمركز؟</p>
+            <div class="modal-actions-gap15">
+                <button class="neu-btn btn-template flex-1" onclick="openLinkExistingOperationModal()"><i class="fas fa-link"></i> ربط بطلب سابق</button>
+                <button class="neu-btn neu-btn-success flex-1" onclick="createNewOperationForEmployee()"><i class="fas fa-plus"></i> إنشاء طلب جديد</button>
+            </div>
+            <button onclick="document.getElementById('employeeOperationChoiceModal').style.display='none'" class="neu-btn neu-btn-danger btn-full-width">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- نافذة ربط بطلب موجود -->
+    <div id="linkExistingOperationModal" class="modal-overlay no-print z-top">
+        <div class="modal-content modal-box-small text-center pos-relative">
+            <button onclick="document.getElementById('linkExistingOperationModal').style.display='none'" class="neu-btn icon-round-btn btn-close-pos" title="إغلاق"><i class="fas fa-times"></i></button>
+            <h3 class="modal-header-title justify-center mb-20"><i class="fas fa-link"></i> ربط بطلب موجود</h3>
+            <p class="settings-card-desc">أدخل كود الطلب أو رقم الوارد لربطه بهذا الموظف:</p>
+            <input type="text" id="existingOperationCode" class="neu-input mb-20 text-center" placeholder="كود الطلب أو رقم الوارد..." title="كود الطلب أو رقم الوارد" aria-label="كود الطلب أو رقم الوارد">
+            <div class="modal-actions-gap10">
+                <button class="neu-btn neu-btn-success flex-1" onclick="linkExistingOperation()">ربط</button>
+                <button class="neu-btn flex-1" onclick="document.getElementById('linkExistingOperationModal').style.display='none'">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة عرض قائمة العمليات المرتبطة بالموظف -->
+    <div id="employeeOperationsListModal" class="modal-overlay no-print z-top">
+        <div class="modal-content modal-box-medium text-center pos-relative">
+            <button onclick="document.getElementById('employeeOperationsListModal').style.display='none'" class="neu-btn icon-round-btn btn-close-pos" title="إغلاق"><i class="fas fa-times"></i></button>
+            <h3 class="modal-header-title justify-center mb-20"><i class="fas fa-list-alt"></i> الطلبات المرتبطة بالموظف</h3>
+            <div id="employeeOperationsListContainer" class="modal-stack-gap15 text-right">
+                <!-- كروت العمليات يتم حقنها برمجياً -->
+            </div>
+            <button onclick="document.getElementById('employeeOperationsListModal').style.display='none'" class="neu-btn neu-btn-danger btn-full-width">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         بوابة تسجيل الدخول والمصادقة (Auth Portal Overlay)
+         ========================================================================== -->
+    <div id="authOverlay" class="auth-overlay no-print">
+        <!-- خلفية متحركة ديناميكية متوافقة مع الوضعين الليلي والنهاري -->
+        <div class="auth-animated-bg">
+            <div class="auth-bg-orb orb-1"></div>
+            <div class="auth-bg-orb orb-2"></div>
+            <div class="auth-bg-orb orb-3"></div>
+            <div class="auth-bg-orb orb-4"></div>
+            <div class="auth-bg-grid"></div>
+        </div>
+
+        <!-- زر تبديل الوضع الليلي / النهاري في شاشة الدخول -->
+        <button type="button" class="auth-theme-toggle-btn" onclick="toggleTheme()" title="تغيير المظهر (ليلي / نهاري)">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="auth-card">
+            <!-- زر إغلاق نافذة تسجيل الدخول -->
+            <button type="button" class="auth-close-btn" onclick="hideAuthModal()" title="إغلاق النافذة">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="auth-header">
+                <img src="logo.png" alt="شعار النظام" class="auth-logo">
+                <h2 class="auth-title">نظام إدارة التأمينات المتكامل</h2>
+                <p class="auth-subtitle">سجّل دخولك للوصول إلى قاعدة بياناتك ومستنداتك المؤمنة</p>
+            </div>
+
+            <!-- أزرار التبويب -->
+            <div class="auth-tabs-nav">
+                <button id="authTabBtn_login" class="auth-tab-btn active-auth-tab" onclick="switchAuthTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+                <button id="authTabBtn_register" class="auth-tab-btn" onclick="switchAuthTab('register')">
+                    <i class="fas fa-user-plus"></i> حساب جديد
+                </button>
+                <button id="authTabBtn_guest" class="auth-tab-btn" onclick="switchAuthTab('guest')">
+                    <i class="fas fa-user-clock"></i> الوضع التجريبي
+                </button>
+            </div>
+
+            <!-- 1. نموذج تسجيل الدخول -->
+            <div id="authTabPane_login" class="auth-pane">
+                <form onsubmit="handleEmailLogin(event)">
+                    <div class="auth-input-group">
+                        <label for="authEmail" class="auth-input-label">البريد الإلكتروني</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="authEmail" class="auth-input-field" placeholder="name@example.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="authPassword" class="auth-input-label">كلمة المرور</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="authPassword" class="auth-input-field" placeholder="••••••••" required autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    <div class="auth-options-row">
+                        <span class="auth-link" onclick="switchAuthTab('forgot')"><i class="fas fa-key"></i> نسيت كلمة المرور؟</span>
+                        <span class="auth-link" onclick="switchAuthTab('guest')">تجربة كضيف <i class="fas fa-arrow-left"></i></span>
+                    </div>
+
+                    <button type="submit" id="btnLoginSubmit" class="btn-auth-primary">
+                        <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                    </button>
+                </form>
+
+                <div class="auth-divider-line"><span>أو المتابعة باستخدام</span></div>
+
+                <button type="button" class="btn-google-auth" onclick="handleGoogleLogin()">
+                    <svg class="google-icon-svg" viewBox="0 0 48 48">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                    الدخول باستخدام حساب Google
+                </button>
+            </div>
+
+            <!-- 2. نموذج إنشاء حساب جديد -->
+            <div id="authTabPane_register" class="auth-pane">
+                <form onsubmit="handleEmailRegister(event)">
+                    <div class="auth-input-group">
+                        <label for="regName" class="auth-input-label">الاسم الكامل / اسم الشركة</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="regName" class="auth-input-field" placeholder="اسمك الكامل" required>
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="regEmail" class="auth-input-label">البريد الإلكتروني</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="regEmail" class="auth-input-field" placeholder="name@example.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="regPassword" class="auth-input-label">كلمة المرور (6 خانات على الأقل)</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="regPassword" class="auth-input-field" placeholder="••••••••" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="regConfirmPassword" class="auth-input-label">تأكيد كلمة المرور</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input type="password" id="regConfirmPassword" class="auth-input-field" placeholder="••••••••" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnRegisterSubmit" class="btn-auth-primary">
+                        <i class="fas fa-user-plus"></i> إنشاء الحساب وتفعيله
+                    </button>
+                </form>
+
+                <div class="auth-divider-line"><span>أو التسجيل السريع بـ</span></div>
+
+                <button type="button" class="btn-google-auth" onclick="handleGoogleLogin()">
+                    <svg class="google-icon-svg" viewBox="0 0 48 48">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                    التسجيل بحساب Google
+                </button>
+            </div>
+
+            <!-- 3. استعادة كلمة المرور -->
+            <div id="authTabPane_forgot" class="auth-pane">
+                <p class="settings-card-desc mb-20 text-center">أدخل بريدك الإلكتروني وسنرسل لك رابطاً مباشراً وآمناً لاستعادة وتعيين كلمة المرور.</p>
+                <form onsubmit="handlePasswordReset(event)">
+                    <div class="auth-input-group">
+                        <label for="forgotEmail" class="auth-input-label">البريد الإلكتروني المسجل</label>
+                        <div class="auth-input-wrap">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="forgotEmail" class="auth-input-field" placeholder="name@example.com" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnForgotSubmit" class="btn-auth-primary mb-15">
+                        <i class="fas fa-paper-plane"></i> إرسال رابط الاستعادة
+                    </button>
+                    
+                    <button type="button" class="neu-btn btn-full-width" onclick="switchAuthTab('login')">
+                        <i class="fas fa-arrow-right"></i> العودة لتسجيل الدخول
+                    </button>
+                </form>
+            </div>
+
+            <!-- 4. الوضع التجريبي (Guest Mode) -->
+            <div id="authTabPane_guest" class="auth-pane">
+                <div class="guest-card-content">
+                    <i class="fas fa-user-clock guest-card-icon"></i>
+                    <h3 class="guest-card-title">استكشاف النظام في الوضع التجريبي</h3>
+                    <p class="guest-card-desc">
+                        يمكنك تجربة كافة وظائف النظام وإدخال بيانات الشركات والموظفين وطباعة وتصدير الاستمارات مباشرة.<br>
+                        <b class="text-warning-bold"><i class="fas fa-info-circle"></i> تنبيه:</b> لن يتم حفظ البيانات في السيرفر وستتلاشى بمجرد تحديث الصفحة أو إغلاقها.
+                    </p>
+                    <button type="button" class="btn-guest-action" onclick="handleGuestLogin()">
+                        <i class="fas fa-play"></i> بدء التجربة الآن (بدون تسجيل)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         نافذة الملف الشخصي وإدارة الحساب (User Profile Modal - Luxury Edition)
+         ========================================================================== -->
+    <div id="profileModal" class="modal-overlay no-print">
+        <div class="modal-content profile-modal-card text-center pos-relative">
+            <button onclick="closeProfileModal()" class="profile-close-btn" title="إغلاق" aria-label="إغلاق">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- الصورة الرمزية مع هالة متوهجة -->
+            <div class="profile-avatar-wrapper">
+                <div id="profModalAvatar" class="profile-modal-avatar-glow">
+                    <div class="modal-avatar-letter">A</div>
+                </div>
+            </div>
+
+            <h3 id="profModalName" class="prof-modal-name">اسم المستخدم</h3>
+            <p id="profModalEmail" class="prof-modal-email">user@example.com</p>
+            
+            <div class="prof-modal-role-wrap">
+                <span id="profModalRole" class="badge-role badge-admin">
+                    <i class="fas fa-shield-alt"></i> مدير النظام
+                </span>
+            </div>
+
+            <!-- بطاقة التنبيه بالتوثيق (تظهر فقط عند عدم التوثيق) -->
+            <div id="profModalVerifyBox" class="verification-notice-box d-none">
+                <div class="verification-notice-header">
+                    <div class="verification-notice-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="verification-notice-text">
+                        <strong>الحساب غير موثق بعد</strong>
+                        <span>يرجى تأكيد بريدك الإلكتروني لضمان أمان حسابك.</span>
+                    </div>
+                </div>
+                <div class="verification-btn-group">
+                    <button class="btn-verify-action btn-verify-send" id="btnSendVerifyLink" onclick="sendEmailVerificationToUser()">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>إرسال الرابط</span>
+                    </button>
+                    <button class="btn-verify-action btn-verify-check" id="btnCheckVerifyStatus" onclick="checkEmailVerificationStatus()">
+                        <i class="fas fa-sync-alt" id="iconCheckVerify"></i>
+                        <span>فحص الآن</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-modal-divider"></div>
+
+            <!-- 1. قائمة إجراءات المستخدم المسجل (تظهر فقط عند تسجيل الدخول) -->
+            <div id="userActionList" class="profile-action-btn-list">
+                <button class="prof-action-card prof-action-primary" onclick="openChangePasswordModal()">
+                    <div class="prof-action-icon-wrap">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="prof-action-info">
+                        <span class="prof-action-title">تغيير كلمة المرور</span>
+                        <span class="prof-action-desc">تعيين كلمة مرور جديدة لحسابك</span>
+                    </div>
+                    <i class="fas fa-chevron-left prof-action-arrow"></i>
+                </button>
+
+                <button class="prof-action-card prof-action-secondary" onclick="sendRecoveryEmailToCurrent()">
+                    <div class="prof-action-icon-wrap">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <div class="prof-action-info">
+                        <span class="prof-action-title">استعادة كلمة المرور</span>
+                        <span class="prof-action-desc">إرسال رابط إعادة التعيين للبريد</span>
+                    </div>
+                    <i class="fas fa-chevron-left prof-action-arrow"></i>
+                </button>
+
+                <button class="prof-action-card prof-action-danger" onclick="openDeleteAccountModal()">
+                    <div class="prof-action-icon-wrap">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <div class="prof-action-info">
+                        <span class="prof-action-title">حذف الحساب نهائياً</span>
+                        <span class="prof-action-desc">مسح الحساب وجميع البيانات المسجلة</span>
+                    </div>
+                    <i class="fas fa-chevron-left prof-action-arrow"></i>
+                </button>
+
+                <button class="prof-action-card prof-action-logout" onclick="closeProfileModal(); handleLogout();">
+                    <div class="prof-action-icon-wrap">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="prof-action-info">
+                        <span class="prof-action-title">تسجيل الخروج</span>
+                        <span class="prof-action-desc">إنهاء الجلسة الحالية بأمان</span>
+                    </div>
+                    <i class="fas fa-arrow-left prof-action-arrow"></i>
+                </button>
+            </div>
+
+            <!-- 2. قائمة إجراءات الزائر (تظهر فقط في الوضع التجريبي) -->
+            <div id="guestActionList" class="profile-action-btn-list d-none">
+                <div class="guest-status-banner">
+                    <div class="guest-status-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="guest-status-text">
+                        <strong>وضع الاستكشاف التجريبي</strong>
+                        <span>البيانات مؤقتة وتتلاشى عند التحديث. سجل حسابك لحفظ أعمالك سحابياً.</span>
+                    </div>
+                </div>
+
+                <button class="prof-action-card prof-action-primary prof-action-login-card" onclick="closeProfileModal(); showAuthModal();">
+                    <div class="prof-action-icon-wrap">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <div class="prof-action-info">
+                        <span class="prof-action-title">تسجيل الدخول / حساب جديد</span>
+                        <span class="prof-action-desc">حفظ ومزامنة بياناتك سحابياً بأمان</span>
+                    </div>
+                    <i class="fas fa-arrow-left prof-action-arrow"></i>
+                </button>
+
+                <button class="prof-action-card prof-action-secondary" onclick="closeProfileModal(); startAppTour();">
+                    <div class="prof-action-icon-wrap">
+                        <i class="fas fa-compass"></i>
+                    </div>
+                    <div class="prof-action-info">
+                        <span class="prof-action-title">جولة إرشادية في النظام</span>
+                        <span class="prof-action-desc">تعرف على كيفية استخدام وميزات النظام</span>
+                    </div>
+                    <i class="fas fa-chevron-left prof-action-arrow"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         نافذة تغيير كلمة المرور (Change Password Modal)
+         ========================================================================== -->
+    <div id="changePasswordModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-small pos-relative">
+            <div class="modal-header-flex">
+                <h3 class="modal-header-title"><i class="fas fa-key"></i> تغيير كلمة المرور</h3>
+                <button onclick="closeChangePasswordModal()" class="neu-btn btn-pill" title="إغلاق"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="changePasswordForm" onsubmit="handleChangePassword(event)" class="change-password-form">
+                <div class="form-group mb-15">
+                    <label for="currentPassword" class="neu-label">كلمة المرور الحالية (إن وُجدت)</label>
+                    <input type="password" id="currentPassword" class="neu-input" placeholder="كلمة المرور الحالية">
+                </div>
+                <div class="form-group mb-15">
+                    <label for="newPassword" class="neu-label">كلمة المرور الجديدة (6 خانات على الأقل)</label>
+                    <input type="password" id="newPassword" class="neu-input" placeholder="كلمة المرور الجديدة" required>
+                </div>
+                <div class="form-group mb-20">
+                    <label for="confirmNewPassword" class="neu-label">تأكيد كلمة المرور الجديدة</label>
+                    <input type="password" id="confirmNewPassword" class="neu-input" placeholder="تأكيد كلمة المرور" required>
+                </div>
+                <button type="submit" id="btnChangePassSubmit" class="neu-btn neu-btn-success btn-full-width">
+                    <i class="fas fa-save"></i> حفظ كلمة المرور الجديدة
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         نافذة تأكيد حذف الحساب نهائياً (Delete Account Modal)
+         ========================================================================== -->
+    <div id="deleteAccountModal" class="modal-overlay no-print">
+        <div class="modal-content modal-box-small text-center pos-relative">
+            <button onclick="closeDeleteAccountModal()" class="neu-btn icon-round-btn btn-close-pos" title="إغلاق"><i class="fas fa-times"></i></button>
+            <i class="fas fa-exclamation-triangle delete-account-icon"></i>
+            <h3 class="modal-header-title mb-10">تأكيد حذف الحساب نهائياً</h3>
+            <p class="delete-account-desc">
+                تحذير هام: سيتم حذف حسابك وجميع الشركات والموظفين والعمليات المرتبطة بك نهائياً من قاعدة البيانات، ولن يمكنك استرجاعها مطلقاً.
+            </p>
+            <form id="deleteAccountForm" onsubmit="handleDeleteAccount(event)">
+                <div id="deleteAccountPassWrap" class="form-group mb-15 text-right">
+                    <label for="deleteAccountPassword" class="neu-label">أدخل كلمة المرور الحالية لتأكيد الهوية:</label>
+                    <input type="password" id="deleteAccountPassword" class="neu-input" placeholder="كلمة المرور الخاصة بك">
+                </div>
+                <div class="modal-footer-buttons">
+                    <button type="submit" id="btnDeleteAccountSubmit" class="neu-btn neu-btn-danger btn-full-width">
+                        <i class="fas fa-trash-alt"></i> نعم، حذف حسابي وبياناتي نهائياً
+                    </button>
+                    <button type="button" class="neu-btn btn-full-width" onclick="closeDeleteAccountModal()">
+                        إلغاء
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- مكتبات Firebase و الأدوات الخارجية -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- سكربتات التطبيق المنظمة والمترابطة -->
+    <script src="auth.js?v=3.0"></script>
+    <script src="occupations.js?v=3.0"></script>
+    <script src="operations.js?v=3.0"></script>
+    <script src="tour.js?v=3.0"></script>
+    <script src="dashboard.js?v=3.0"></script>
+    <script src="script.js?v=3.0"></script>
+
+    <!-- حاوية التنبيهات Toast -->
+    <div id="toast-container"></div>
+
+    <!-- تسجيل Service Worker للتحديث التلقائي الفوري ودعم تطبيقات الموبايل PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then((reg) => {
+                    reg.onupdatefound = () => {
+                        const installingWorker = reg.installing;
+                        if (installingWorker) {
+                            installingWorker.onstatechange = () => {
+                                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('🔄 تم تحديث المنظومة، جاري تحميل الإصدار الجديد...');
+                                    window.location.reload();
+                                }
+                            };
+                        }
+                    };
+                }).catch((err) => {
+                    console.log('ServiceWorker registration optional info:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
