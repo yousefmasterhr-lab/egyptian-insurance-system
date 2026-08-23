@@ -625,12 +625,12 @@ body {
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        overflow: visible !important;
+        overflow: hidden !important;
     }
 
     body > *:not(.app-container) {
@@ -702,10 +702,10 @@ body {
         display: block !important;
         position: relative !important;
         width: 794px !important;
-        height: 1123px !important;
-        min-height: 1123px !important;
-        max-height: 1123px !important;
-        margin: 0 auto !important;
+        height: 1120px !important;
+        min-height: 1120px !important;
+        max-height: 1120px !important;
+        margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
@@ -730,7 +730,7 @@ body {
         break-after: page !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
     }
 
     /* صفحة الظهر: تتبع صفحة الوجه مباشرة بدون فاصل إضافي ولا تفصل بعدها لتفادي أي صفحة بيضاء */
@@ -740,7 +740,7 @@ body {
         break-before: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
         margin-top: 0 !important;
     }
 
