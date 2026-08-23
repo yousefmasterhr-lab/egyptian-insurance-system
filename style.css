@@ -630,7 +630,7 @@ body {
         margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
-        overflow: visible !important;
+        overflow: hidden !important;
     }
 
     body > *:not(.app-container) {
@@ -676,6 +676,8 @@ body {
         box-shadow: none !important;
         gap: 0 !important;
         overflow: visible !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
     }
 
     .form-page-group {
@@ -687,6 +689,8 @@ body {
         height: auto !important;
         font-size: 0 !important;
         line-height: 0 !important;
+        letter-spacing: 0 !important;
+        word-spacing: 0 !important;
     }
 
     .form-page-group.d-none {
@@ -700,9 +704,9 @@ body {
         display: block !important;
         position: relative !important;
         width: 210mm !important;
-        height: 296.5mm !important;
+        height: 294mm !important;
         max-width: 210mm !important;
-        max-height: 296.5mm !important;
+        max-height: 294mm !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
@@ -714,18 +718,28 @@ body {
         line-height: normal !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        page-break-after: auto !important;
-        break-after: auto !important;
-        page-break-before: auto !important;
-        break-before: auto !important;
-        background-size: 210mm 296.5mm !important;
+        background-size: 210mm 297mm !important;
         background-position: 0 0 !important;
         background-repeat: no-repeat !important;
     }
 
+    /* صفحة الوجه: فاصل صفحة إجباري بعد الوجه فقط */
+    .a4-page,
+    .a4-page-s6 {
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+    }
+
+    /* صفحة الظهر: تمنع أي فواصل بعدها */
     .a4-page-back,
     .a4-page-s6-back {
         margin-top: 0 !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
     }
 
     .overlay-input {
