@@ -607,7 +607,7 @@ body {
 }
 
 @page {
-    size: A4 portrait;
+    size: 210mm 297mm;
     margin: 0;
 }
 
@@ -617,20 +617,20 @@ body {
     *::before,
     *::after {
         box-sizing: border-box !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     html,
     body {
-        width: 794px !important;
+        width: 210mm !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
         margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        overflow: hidden !important;
+        overflow: visible !important;
     }
 
     body > *:not(.app-container) {
@@ -668,7 +668,7 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 794px !important;
+        width: 210mm !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
@@ -676,8 +676,6 @@ body {
         box-shadow: none !important;
         gap: 0 !important;
         overflow: visible !important;
-        page-break-inside: auto !important;
-        break-inside: auto !important;
     }
 
     .form-page-group {
@@ -685,7 +683,7 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 794px !important;
+        width: 210mm !important;
         height: auto !important;
         font-size: 0 !important;
         line-height: 0 !important;
@@ -701,10 +699,10 @@ body {
     .a4-page-s6-back {
         display: block !important;
         position: relative !important;
-        width: 794px !important;
-        height: 1120px !important;
-        min-height: 1120px !important;
-        max-height: 1120px !important;
+        width: 210mm !important;
+        height: 296.5mm !important;
+        max-width: 210mm !important;
+        max-height: 296.5mm !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
@@ -716,31 +714,17 @@ body {
         line-height: normal !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background-size: 794px 1123px !important;
+        page-break-after: auto !important;
+        break-after: auto !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
+        background-size: 210mm 296.5mm !important;
         background-position: 0 0 !important;
         background-repeat: no-repeat !important;
     }
 
-    /* صفحة الوجه: فاصل صفحة واحد فقط بعدها */
-    .a4-page,
-    .a4-page-s6 {
-        page-break-after: always !important;
-        break-after: page !important;
-        page-break-before: avoid !important;
-        break-before: avoid !important;
-        margin: 0 !important;
-    }
-
-    /* صفحة الظهر: تتبع صفحة الوجه مباشرة بدون فاصل إضافي ولا تفصل بعدها لتفادي أي صفحة بيضاء */
     .a4-page-back,
     .a4-page-s6-back {
-        page-break-before: avoid !important;
-        break-before: avoid !important;
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-        margin: 0 !important;
         margin-top: 0 !important;
     }
 
@@ -748,8 +732,6 @@ body {
         background: transparent !important;
         border: none !important;
         color: #000 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
     }
 
     .overlay-input::placeholder,
