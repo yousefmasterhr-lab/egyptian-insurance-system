@@ -607,7 +607,7 @@ body {
 }
 
 @page {
-    size: A4 portrait;
+    size: 210mm 297mm;
     margin: 0;
 }
 
@@ -623,11 +623,13 @@ body {
 
     html,
     body {
+        width: 210mm !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
         margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
-        width: 100% !important;
-        height: auto !important;
         overflow: visible !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -668,7 +670,7 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
+        width: 210mm !important;
         height: auto !important;
         border: none !important;
         box-shadow: none !important;
@@ -680,7 +682,7 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
+        width: 210mm !important;
         height: auto !important;
     }
 
@@ -702,11 +704,11 @@ body {
     .a4-page-s6-back {
         display: block !important;
         position: relative !important;
-        width: 794px !important;
-        height: 1123px !important;
-        min-height: 1123px !important;
-        max-height: 1123px !important;
-        margin: 0 auto !important;
+        width: 210mm !important;
+        height: 290mm !important;
+        max-width: 210mm !important;
+        max-height: 290mm !important;
+        margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
@@ -716,7 +718,7 @@ body {
         page-break-inside: avoid !important;
         break-inside: avoid !important;
         background-color: white !important;
-        background-size: 794px 1123px !important;
+        background-size: 210mm 296.5mm !important;
         background-repeat: no-repeat !important;
         background-position: 0 0 !important;
         -webkit-print-color-adjust: exact !important;
@@ -729,6 +731,7 @@ body {
 
     .a4-page-back {
         background-image: url('form_bg_back.png') !important;
+        margin: 0 !important;
         margin-top: 0 !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
@@ -742,6 +745,7 @@ body {
 
     .a4-page-s6-back {
         background-image: url('form_s6_bg_back.jpg') !important;
+        margin: 0 !important;
         margin-top: 0 !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
