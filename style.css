@@ -713,6 +713,24 @@ body {
         background-size: 210mm 297mm !important;
         background-position: 0 0 !important;
         background-repeat: no-repeat !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .a4-page {
+        background-image: url('form_bg.png') !important;
+    }
+
+    .a4-page-back {
+        background-image: url('form_bg_back.png') !important;
+    }
+
+    .a4-page-s6 {
+        background-image: url('form_s6_bg.jpg') !important;
+    }
+
+    .a4-page-s6-back {
+        background-image: url('form_s6_bg_back.jpg') !important;
     }
 
     /* صفحة الوجه: تفصل صفحة إجبارياً بعد الوجه فقط */
