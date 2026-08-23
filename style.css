@@ -608,13 +608,31 @@ body {
     background: #dc2626;
 }
 
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
 @media print {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
 
     html,
     body {
-        margin: 0;
-        padding: 0;
-        background-color: white;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: white !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     .modern-nav,
@@ -668,27 +686,62 @@ body {
 
     .a4-page,
     .a4-page-s6 {
-        page-break-after: always;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
     }
 
     .a4-page,
     .a4-page-back,
     .a4-page-s6,
     .a4-page-s6-back {
-        width: 794px;
-        height: 1123px;
+        display: block !important;
+        position: relative !important;
+        width: 210mm !important;
+        height: 290mm !important;
+        max-width: 210mm !important;
+        max-height: 290mm !important;
         box-shadow: none !important;
         margin: 0 auto !important;
         padding: 0 !important;
-        page-break-inside: avoid;
-        border-radius: 0;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        border-radius: 0 !important;
+        background-color: white !important;
+        background-size: 210mm 296.5mm !important;
+        background-repeat: no-repeat !important;
+        background-position: 0 0 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 
-    .a4-page-back,
-    .a4-page-s6-back {
+    .a4-page {
+        background-image: url('form_bg.png') !important;
+    }
+
+    .a4-page-back {
+        background-image: url('form_bg_back.png') !important;
         margin-top: 0 !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .a4-page-s6 {
+        background-image: url('form_s6_bg.jpg') !important;
+    }
+
+    .a4-page-s6-back {
+        background-image: url('form_s6_bg_back.jpg') !important;
+        margin-top: 0 !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
     }
 
     .overlay-input {
@@ -705,26 +758,6 @@ body {
         color: transparent !important;
         -webkit-text-fill-color: transparent !important;
         opacity: 0 !important;
-    }
-}
-
-@media print {
-    @page {
-        size: A4 portrait;
-        margin: 0;
-    }
-
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .a4-page {
-        page-break-after: always;
-        break-after: page;
     }
 }
 
