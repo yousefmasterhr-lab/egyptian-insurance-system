@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="style.css?v=4.1">
+    <link rel="stylesheet" href="style.css?v=3.6">
 </head>
 
 <body>
@@ -121,7 +121,7 @@
         </div>
         <div class="mobile-actions-wrap">
             <button class="icon-round-btn" onclick="toggleTheme()" title="المظهر"><i class="fas fa-sun" id="mobileThemeIcon"></i></button>
-            <button class="icon-round-btn" onclick="toggleProfileDropdown()" title="الملف الشخصي والحساب"><i class="fas fa-user"></i></button>
+            <button class="icon-round-btn" onclick="showAuthModal()" title="الحساب"><i class="fas fa-user"></i></button>
         </div>
     </header>
 
@@ -186,59 +186,61 @@
             <!-- شريط الإجراءات العائم الموحد لمركز الاستمارات -->
             <div id="floating-action-bar" class="floating-action-bar-v2 no-print d-none">
                 
-                <!-- بحث الشركات والموظفين -->
-                <div class="floating-searches-grid">
-                    <div class="floating-search-wrap">
-                        <input type="text" id="search_company" class="floating-search-v2 floating-search-company" placeholder="ابحث عن شركة (اسم/كود)..." title="بحث عن شركة" aria-label="بحث عن شركة" autocomplete="off" oninput="handleCompanySearch(this.value)" onfocus="handleCompanySearch(this.value)">
-                        <div id="company_dropdown" class="custom-dropdown"></div>
-                    </div>
-                    
-                    <div class="floating-search-wrap">
-                        <input type="text" id="search_employee" class="floating-search-v2 floating-search-employee" placeholder="ابحث عن موظف..." title="بحث عن موظف" aria-label="بحث عن موظف" autocomplete="off" oninput="handleEmployeeSearch(this.value)" onfocus="handleEmployeeSearch(this.value)">
-                        <div id="employee_dropdown" class="custom-dropdown"></div>
-                    </div>
+                <!-- بحث الشركات -->
+                <div class="floating-search-wrap">
+                    <input type="text" id="search_company" class="floating-search-v2 floating-search-company" placeholder="ابحث عن شركة (اسم/كود)..." title="بحث عن شركة" aria-label="بحث عن شركة" autocomplete="off" oninput="handleCompanySearch(this.value)" onfocus="handleCompanySearch(this.value)">
+                    <div id="company_dropdown" class="custom-dropdown"></div>
+                </div>
+                
+                <!-- بحث الموظفين -->
+                <div class="floating-search-wrap">
+                    <input type="text" id="search_employee" class="floating-search-v2 floating-search-employee" placeholder="ابحث عن موظف..." title="بحث عن موظف" aria-label="بحث عن موظف" autocomplete="off" oninput="handleEmployeeSearch(this.value)" onfocus="handleEmployeeSearch(this.value)">
+                    <div id="employee_dropdown" class="custom-dropdown"></div>
+                </div>
+                
+                <!-- تفريغ الحقول -->
+                <button class="floating-btn-v2" onclick="clearFormFields()" title="تفريغ الحقول" aria-label="تفريغ الحقول">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+
+                <!-- فاصل -->
+                <div class="floating-divider-v2"></div>
+
+                <!-- وضع المعاينة والطباعة -->
+                <button id="tab-btn-print" class="floating-btn-v2" onclick="switchFormMode('print')" title="وضع المعاينة" aria-label="وضع المعاينة">
+                    <i class="fas fa-eye"></i>
+                </button>
+
+                <!-- وضع ضبط الإحداثيات -->
+                <button id="tab-btn-settings" class="floating-btn-v2" onclick="switchFormMode('settings')" title="وضع ضبط الإحداثيات" aria-label="وضع ضبط الإحداثيات">
+                    <i class="fas fa-tools"></i>
+                </button>
+
+                <!-- زر فتح/إغلاق لوحة نموذج إدخال البيانات -->
+                <button id="btn-toggle-live-editor" class="floating-btn-v2" onclick="toggleLiveEditorDrawer()" title="إظهار/إخفاء لوحة إدخال وتعديل البيانات" aria-label="إظهار/إخفاء لوحة إدخال وتعديل البيانات">
+                    <i class="fas fa-file-signature"></i>
+                </button>
+
+                <!-- فاصل -->
+                <div class="floating-divider-v2"></div>
+
+                <!-- طباعة -->
+                <button class="floating-btn-v2" onclick="window.print()" title="طباعة الاستمارة" aria-label="طباعة الاستمارة">
+                    <i class="fas fa-print"></i>
+                </button>
+
+                <!-- إجراءات وضع الإعدادات فقط -->
+                <div id="settings-actions" class="settings-actions-v2">
+                    <button class="floating-btn-v2 btn-warning-v2" onclick="createNewInput()" title="إضافة مربع إدخال جديد" aria-label="إضافة مربع إدخال جديد">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="floating-btn-v2 btn-primary-v2" onclick="saveCoordinates()" title="حفظ الإحداثيات" aria-label="حفظ الإحداثيات">
+                        <i class="fas fa-save"></i>
+                    </button>
                 </div>
 
-                <!-- أزرار الإجراءات في صف واحد أنيق -->
-                <div class="floating-buttons-row">
-                    <!-- تفريغ الحقول -->
-                    <button class="floating-btn-v2" onclick="clearFormFields()" title="تفريغ الحقول" aria-label="تفريغ الحقول">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-
-                    <!-- وضع المعاينة والطباعة -->
-                    <button id="tab-btn-print" class="floating-btn-v2" onclick="switchFormMode('print')" title="وضع المعاينة" aria-label="وضع المعاينة">
-                        <i class="fas fa-eye"></i>
-                    </button>
-
-                    <!-- وضع ضبط الإحداثيات -->
-                    <button id="tab-btn-settings" class="floating-btn-v2" onclick="switchFormMode('settings')" title="وضع ضبط الإحداثيات" aria-label="وضع ضبط الإحداثيات">
-                        <i class="fas fa-tools"></i>
-                    </button>
-
-                    <!-- زر فتح/إغلاق لوحة نموذج إدخال البيانات -->
-                    <button id="btn-toggle-live-editor" class="floating-btn-v2" onclick="toggleLiveEditorDrawer()" title="إظهار/إخفاء لوحة إدخال وتعديل البيانات" aria-label="إظهار/إخفاء لوحة إدخال وتعديل البيانات">
-                        <i class="fas fa-file-signature"></i>
-                    </button>
-
-                    <!-- طباعة -->
-                    <button class="floating-btn-v2 btn-primary-print" onclick="window.print()" title="طباعة الاستمارة" aria-label="طباعة الاستمارة">
-                        <i class="fas fa-print"></i>
-                    </button>
-
-                    <!-- إجراءات وضع الإعدادات فقط -->
-                    <div id="settings-actions" class="settings-actions-v2 d-none">
-                        <button class="floating-btn-v2 btn-warning-v2" onclick="createNewInput()" title="إضافة مربع إدخال جديد" aria-label="إضافة مربع إدخال جديد">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <button class="floating-btn-v2 btn-primary-v2" onclick="saveCoordinates()" title="حفظ الإحداثيات" aria-label="حفظ الإحداثيات">
-                            <i class="fas fa-save"></i>
-                        </button>
-                    </div>
-
-                    <!-- إجراءات وضع الطباعة -->
-                    <div id="print-actions" class="d-none"></div>
-                </div>
+                <!-- إجراءات وضع الطباعة -->
+                <div id="print-actions" class="d-none"></div>
 
             </div>
 
@@ -514,16 +516,13 @@
                 <div class="emp-archive-bar mb-15">
                     <div class="emp-archive-pills">
                         <button class="emp-archive-btn active-archive" data-archive="active" onclick="setEmployeeArchiveFilter('active', this)">
-                            <span class="emp-archive-label"><i class="fas fa-user-check"></i> الموظفون على رأس العمل</span>
-                            <span class="emp-archive-count-badge" id="empActiveCount">0</span>
+                            <i class="fas fa-user-check"></i> الموظفون على رأس العمل (<span id="empActiveCount">0</span>)
                         </button>
                         <button class="emp-archive-btn" data-archive="archived" onclick="setEmployeeArchiveFilter('archived', this)">
-                            <span class="emp-archive-label"><i class="fas fa-box-archive"></i> أرشيف المستقيلين ومنتهيي الخدمة</span>
-                            <span class="emp-archive-count-badge" id="empArchivedCount">0</span>
+                            <i class="fas fa-box-archive"></i> أرشيف المستقيلين ومنتهيي الخدمة (<span id="empArchivedCount">0</span>)
                         </button>
                         <button class="emp-archive-btn" data-archive="all" onclick="setEmployeeArchiveFilter('all', this)">
-                            <span class="emp-archive-label"><i class="fas fa-users"></i> جميع السجلات</span>
-                            <span class="emp-archive-count-badge" id="empTotalCount">0</span>
+                            <i class="fas fa-users"></i> جميع السجلات (<span id="empTotalCount">0</span>)
                         </button>
                     </div>
                 </div>
@@ -1991,12 +1990,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <!-- سكربتات التطبيق المنظمة والمترابطة -->
-    <script src="auth.js?v=4.0"></script>
-    <script src="occupations.js?v=4.0"></script>
-    <script src="operations.js?v=4.0"></script>
-    <script src="tour.js?v=4.0"></script>
-    <script src="dashboard.js?v=4.0"></script>
-    <script src="script.js?v=4.0"></script>
+    <script src="auth.js?v=3.6"></script>
+    <script src="occupations.js?v=3.6"></script>
+    <script src="operations.js?v=3.6"></script>
+    <script src="tour.js?v=3.6"></script>
+    <script src="dashboard.js?v=3.6"></script>
+    <script src="script.js?v=3.6"></script>
 
     <!-- حاوية التنبيهات Toast -->
     <div id="toast-container"></div>
