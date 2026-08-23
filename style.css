@@ -733,8 +733,8 @@ body {
         background-image: url('form_bg_back.png') !important;
         margin: 0 !important;
         margin-top: 0 !important;
-        page-break-before: avoid !important;
-        break-before: avoid !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
     }
@@ -747,8 +747,8 @@ body {
         background-image: url('form_s6_bg_back.jpg') !important;
         margin: 0 !important;
         margin-top: 0 !important;
-        page-break-before: avoid !important;
-        break-before: avoid !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
     }
