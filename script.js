@@ -287,6 +287,78 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 
 // ==========================================
+// التنقل بين الشاشات (View Switching)
+// ==========================================
+function switchView(viewId) {
+    document.querySelectorAll('.app-view').forEach(view => {
+        view.classList.remove('active-view');
+    });
+    const viewEl = document.getElementById(viewId);
+    if (viewEl) viewEl.classList.add('active-view');
+
+    document.querySelectorAll('.nav-item').forEach(nav => {
+        nav.classList.remove('active-nav');
+    });
+    
+    const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes(viewId));
+    if (activeNav) activeNav.classList.add('active-nav');
+
+    // التحكم في إظهار شريط الإجراءات العائم فقط داخل مركز الاستمارات
+    const floatingBar = document.getElementById('floating-action-bar');
+    if (floatingBar) {
+        if (viewId === 'form-hub-view') {
+            floatingBar.classList.remove('d-none');
+            floatingBar.style.display = 'flex';
+        } else {
+            floatingBar.classList.add('d-none');
+            floatingBar.style.display = 'none';
+        }
+    }
+
+    // إغلاق الدرج الجانبي للموبايل تلقائياً
+    const sidebar = document.getElementById('appSidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    if (sidebar && sidebar.classList.contains('mobile-sidebar-open')) {
+        sidebar.classList.remove('mobile-sidebar-open');
+    }
+    if (backdrop && backdrop.classList.contains('show')) {
+        backdrop.classList.remove('show');
+    }
+
+    // التمرير السلس لأعلى الشاشة
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (viewId === 'companies-view' || viewId === 'employees-view' || viewId === 'settings-view' || viewId === 'operations-view' || viewId === 'dashboard-view') {
+        switchFormMode('print');
+    }
+
+    if (viewId === 'dashboard-view') {
+        if (typeof initDashboard === 'function') {
+            initDashboard();
+        } else if (typeof updateDashboardAnalytics === 'function') {
+            updateDashboardAnalytics();
+        }
+        if (typeof loadCompanies === 'function') loadCompanies();
+        if (typeof loadEmployees === 'function') loadEmployees();
+        if (typeof loadOperations === 'function') loadOperations();
+    } else if (viewId === 'employees-view') {
+        if (typeof loadCompanies === 'function') loadCompanies();
+        if (typeof loadEmployees === 'function') loadEmployees();
+        if (typeof loadEmployeesGrid === 'function') loadEmployeesGrid();
+    } else if (viewId === 'companies-view') {
+        if (typeof loadCompaniesGrid === 'function') loadCompaniesGrid();
+    } else if (viewId === 'operations-view' && typeof loadOperations === 'function') {
+        const opSearch = document.getElementById('operationSearch');
+        if (opSearch && !window._keepOpSearch) {
+            opSearch.value = '';
+        }
+        window._keepOpSearch = false;
+        loadOperations();
+    }
+}
+window.switchView = switchView;
+
+// ==========================================
 // أوضاع شاشة الاستمارات (Form Mode: Print / Settings)
 // ==========================================
 function switchFormMode(mode) {
@@ -346,62 +418,6 @@ function switchFormMode(mode) {
         });
         if (typeof deleteBtn !== 'undefined' && deleteBtn) deleteBtn.style.display = 'none';
         if (typeof activeInputForDelete !== 'undefined') activeInputForDelete = null;
-    }
-}
-
-// ==========================================
-// التنقل بين الشاشات (View Switching)
-// ==========================================
-function switchView(viewId) {
-    document.querySelectorAll('.app-view').forEach(view => {
-        view.classList.remove('active-view');
-    });
-    const viewEl = document.getElementById(viewId);
-    if(viewEl) viewEl.classList.add('active-view');
-
-    document.querySelectorAll('.nav-item').forEach(nav => {
-        nav.classList.remove('active-nav');
-    });
-    
-    const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.getAttribute('onclick') && el.getAttribute('onclick').includes(viewId));
-    if(activeNav) activeNav.classList.add('active-nav');
-
-    const floatingBar = document.getElementById('floating-action-bar');
-    if (floatingBar) {
-        if (viewId === 'form-hub-view') {
-            floatingBar.classList.remove('d-none');
-            floatingBar.style.display = 'inline-flex';
-        } else {
-            floatingBar.classList.add('d-none');
-            floatingBar.style.display = 'none';
-        }
-    }
-
-    if(viewId === 'companies-view' || viewId === 'employees-view' || viewId === 'settings-view' || viewId === 'operations-view' || viewId === 'dashboard-view') {
-        switchFormMode('print');
-    }
-
-    if (viewId === 'dashboard-view') {
-        if (typeof initDashboard === 'function') {
-            initDashboard();
-        } else if (typeof updateDashboardAnalytics === 'function') {
-            updateDashboardAnalytics();
-        }
-        loadCompanies();
-        loadEmployees();
-        if (typeof loadOperations === 'function') loadOperations();
-    } else if (viewId === 'employees-view') {
-        loadCompanies();
-        loadEmployees();
-    } else if (viewId === 'companies-view') {
-        loadCompaniesGrid();
-    } else if (viewId === 'operations-view' && typeof loadOperations === 'function') {
-        const opSearch = document.getElementById('operationSearch');
-        if (opSearch && !window._keepOpSearch) {
-            opSearch.value = '';
-        }
-        window._keepOpSearch = false;
-        loadOperations();
     }
 }
 
