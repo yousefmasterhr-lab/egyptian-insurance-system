@@ -2721,6 +2721,25 @@ function safeSet(id, val) {
     const el = document.getElementById(id);
     if (!el) return;
     el.value = (val !== null && val !== undefined) ? val : '';
+    if (el.classList && el.classList.contains('overlay-input')) {
+        autoFitInputFont(el);
+    }
+}
+
+function autoFitInputFont(input) {
+    if (!input || input.type !== 'text' || input.hasAttribute('maxlength')) return;
+    if (!input.value) {
+        input.style.fontSize = '16px';
+        return;
+    }
+    input.style.fontSize = '16px';
+    if (input.scrollWidth > input.clientWidth + 2) {
+        let size = 15.5;
+        while (input.scrollWidth > input.clientWidth + 2 && size >= 9.5) {
+            input.style.fontSize = size + 'px';
+            size -= 0.5;
+        }
+    }
 }
 
 function clearFormFields() {
@@ -3151,31 +3170,12 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// ملاءمة حجم الخط تلقائياً للنصوص الطويلة داخل الحقول
-setInterval(() => {
-    document.querySelectorAll('.overlay-input').forEach(input => {
-        if (input.type === 'text' && !input.hasAttribute('maxlength') && input.value) {
-            let currentSize = parseFloat(window.getComputedStyle(input).fontSize) || 16;
-            if (input.scrollWidth > input.clientWidth + 2) {
-                while (input.scrollWidth > input.clientWidth + 2 && currentSize > 9) {
-                    currentSize -= 0.5;
-                    input.style.fontSize = currentSize + 'px';
-                }
-            } else if (currentSize < 16) {
-                while (currentSize < 16) {
-                    input.style.fontSize = (currentSize + 0.5) + 'px';
-                    if (input.scrollWidth > input.clientWidth + 2) {
-                        input.style.fontSize = currentSize + 'px';
-                        break;
-                    }
-                    currentSize += 0.5;
-                }
-            }
-        } else if (input.type === 'text' && !input.hasAttribute('maxlength') && !input.value) {
-            input.style.fontSize = '16px';
-        }
-    });
-}, 800);
+// ملاءمة حجم الخط فورياً عند كتابة المستخدم داخل الحقول (بدون أي بطء أو تكرار بالخلفية)
+document.addEventListener('input', function(e) {
+    if (e.target && e.target.classList && e.target.classList.contains('overlay-input')) {
+        autoFitInputFont(e.target);
+    }
+});
 
 // ==========================================
 // نوافذ الاستمارات والربط (Modals & Operations Integration)

@@ -628,7 +628,7 @@ body {
         margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
-        width: 100% !important;
+        width: 794px !important;
         height: auto !important;
         overflow: visible !important;
         -webkit-print-color-adjust: exact !important;
@@ -659,24 +659,28 @@ body {
 
     .app-container,
     .main-content,
-    #form-hub-view {
+    #form-hub-view,
+    .form-canvas-wrapper,
+    .form-canvas-stack {
         display: block !important;
+        position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
+        width: 794px !important;
         height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        border: none !important;
+        box-shadow: none !important;
         overflow: visible !important;
-    }
-
-    .print-block-wrapper {
-        display: block !important;
     }
 
     .form-page-group {
         display: block !important;
+        position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
+        width: 794px !important;
         height: auto !important;
     }
 
@@ -698,12 +702,12 @@ body {
     .a4-page-s6-back {
         display: block !important;
         position: relative !important;
-        width: 210mm !important;
-        height: 290mm !important;
-        max-width: 210mm !important;
-        max-height: 290mm !important;
+        width: 794px !important;
+        height: 1120px !important;
+        max-width: 794px !important;
+        max-height: 1120px !important;
         box-shadow: none !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
         padding: 0 !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
@@ -711,7 +715,7 @@ body {
         break-inside: avoid !important;
         border-radius: 0 !important;
         background-color: white !important;
-        background-size: 210mm 296.5mm !important;
+        background-size: 794px 1123px !important;
         background-repeat: no-repeat !important;
         background-position: 0 0 !important;
         -webkit-print-color-adjust: exact !important;
@@ -724,6 +728,7 @@ body {
 
     .a4-page-back {
         background-image: url('form_bg_back.png') !important;
+        margin: 0 !important;
         margin-top: 0 !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
@@ -737,6 +742,7 @@ body {
 
     .a4-page-s6-back {
         background-image: url('form_s6_bg_back.jpg') !important;
+        margin: 0 !important;
         margin-top: 0 !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
@@ -3292,17 +3298,14 @@ html[data-theme="dark"] .tour-arrow {
 }
 
 #applicant_ins_num {
-    top: 251px;
-    right: 116px;
-    width: 232px;
+    top: 250px;
+    right: 110px;
+    width: 236px;
     height: 27px;
-    letter-spacing: calc(-1ch + 25.7778px);
-    text-indent: calc((-1ch + 25.7778px) / 2);
-    padding: 0px;
+    letter-spacing: calc(-1ch + 26.2222px);
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #applicant_phone {
@@ -3316,30 +3319,24 @@ html[data-theme="dark"] .tour-arrow {
 
 #applicant_nat_id {
     top: 286px;
-    right: 112px;
+    right: 107px;
     width: 362px;
     height: 25px;
     letter-spacing: calc(-1ch + 25.8571px);
-    text-indent: calc((-1ch + 25.8571px) / 2);
-    padding: 0px;
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #emp_ins_num {
     top: 363px;
-    right: 157px;
+    right: 151px;
     width: 235px;
     height: 24px;
     letter-spacing: calc(-1ch + 26.1111px);
-    text-indent: calc((-1ch + 26.1111px) / 2);
-    padding: 0px;
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #emp_name {
@@ -3351,16 +3348,13 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_nat_id {
     top: 395px;
-    right: 157px;
-    width: 364px;
-    height: 23px;
-    letter-spacing: calc(-1ch + 26px);
-    text-indent: calc((-1ch + 26px) / 2);
-    padding: 0px;
+    right: 153px;
+    width: 361px;
+    height: 24px;
+    letter-spacing: calc(-1ch + 25.7857px);
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #emp_nationality {
@@ -3386,44 +3380,35 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_sub_date_day {
     top: 446px;
-    right: 207px;
-    width: 45px;
-    height: 22px;
-    letter-spacing: calc(-1ch + 22.5px);
-    text-indent: calc((-1ch + 22.5px) / 2);
-    padding: 0px;
+    right: 205px;
+    width: 46px;
+    height: 24px;
+    letter-spacing: calc(-1ch + 23px);
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #emp_sub_date_month {
     top: 447px;
-    right: 271px;
-    width: 45px;
-    height: 22px;
-    letter-spacing: calc(-1ch + 22.5px);
-    text-indent: calc((-1ch + 22.5px) / 2);
-    padding: 0px;
+    right: 265px;
+    width: 49px;
+    height: 24px;
+    letter-spacing: calc(-1ch + 24.5px);
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #emp_sub_date_year {
     top: 447px;
-    right: 329px;
-    width: 91px;
-    height: 23px;
-    letter-spacing: calc(-1ch + 22.75px);
-    text-indent: calc((-1ch + 22.75px) / 2);
-    padding: 0px;
+    right: 324px;
+    width: 93px;
+    height: 24px;
+    letter-spacing: calc(-1ch + 23.25px);
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #emp_sector {
@@ -3562,15 +3547,12 @@ html[data-theme="dark"] .tour-arrow {
 #fac_number {
     top: 705px;
     right: 485px;
-    width: 237px;
+    width: 230px;
     height: 23px;
-    letter-spacing: calc(-1ch + 26.3333px);
-    text-indent: calc((-1ch + 26.3333px) / 2);
-    padding: 0px;
+    letter-spacing: calc(-1ch + 25.5556px);
+    padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
-    direction: ltr;
-    text-align: left;
 }
 
 #res_building {
@@ -6471,6 +6453,7 @@ html[data-theme="light"] .emp-card-ops-strip:hover {
 .form-canvas-stack {
     flex-shrink: 0;
     width: 794px;
+    contain: layout style;
 }
 
 .live-editor-drawer {
@@ -6487,9 +6470,11 @@ html[data-theme="light"] .emp-card-ops-strip:hover {
     position: sticky;
     top: 80px;
     overflow: hidden;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
     z-index: 100;
+    contain: content;
+    will-change: transform;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
