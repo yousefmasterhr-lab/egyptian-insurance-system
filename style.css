@@ -630,7 +630,7 @@ body {
         margin: 0 !important;
         padding: 0 !important;
         background-color: white !important;
-        overflow: hidden !important;
+        overflow: visible !important;
     }
 
     body > *:not(.app-container) {
@@ -676,8 +676,6 @@ body {
         box-shadow: none !important;
         gap: 0 !important;
         overflow: visible !important;
-        font-size: 0 !important;
-        line-height: 0 !important;
     }
 
     .form-page-group {
@@ -687,10 +685,6 @@ body {
         padding: 0 !important;
         width: 210mm !important;
         height: auto !important;
-        font-size: 0 !important;
-        line-height: 0 !important;
-        letter-spacing: 0 !important;
-        word-spacing: 0 !important;
     }
 
     .form-page-group.d-none {
@@ -704,9 +698,9 @@ body {
         display: block !important;
         position: relative !important;
         width: 210mm !important;
-        height: 294mm !important;
+        height: 290mm !important;
         max-width: 210mm !important;
-        max-height: 294mm !important;
+        max-height: 290mm !important;
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
@@ -714,8 +708,6 @@ body {
         border-radius: 0 !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
-        font-size: 14px !important;
-        line-height: normal !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
         background-size: 210mm 297mm !important;
@@ -723,7 +715,7 @@ body {
         background-repeat: no-repeat !important;
     }
 
-    /* صفحة الوجه: فاصل صفحة إجباري بعد الوجه فقط */
+    /* صفحة الوجه: تفصل صفحة إجبارياً بعد الوجه فقط */
     .a4-page,
     .a4-page-s6 {
         page-break-after: always !important;
@@ -735,6 +727,7 @@ body {
     /* صفحة الظهر: تمنع أي فواصل بعدها */
     .a4-page-back,
     .a4-page-s6-back {
+        margin: 0 !important;
         margin-top: 0 !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
