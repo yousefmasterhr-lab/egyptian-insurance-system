@@ -621,11 +621,11 @@ body {
 
     html,
     body {
-        width: 210mm !important;
+        width: 794px !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         background-color: white !important;
         -webkit-print-color-adjust: exact !important;
@@ -668,7 +668,7 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 210mm !important;
+        width: 794px !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
@@ -685,7 +685,7 @@ body {
         position: static !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 210mm !important;
+        width: 794px !important;
         height: auto !important;
         font-size: 0 !important;
         line-height: 0 !important;
@@ -700,17 +700,17 @@ body {
     .a4-page-s6,
     .a4-page-s6-back {
         display: block !important;
-        width: 210mm !important;
-        height: 285mm !important;
-        min-height: 285mm !important;
-        max-height: 285mm !important;
-        margin: 0 !important;
+        position: relative !important;
+        width: 794px !important;
+        height: 1123px !important;
+        min-height: 1123px !important;
+        max-height: 1123px !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
         overflow: hidden !important;
-        position: relative !important;
         box-sizing: border-box !important;
         font-size: 14px !important;
         line-height: normal !important;
@@ -718,7 +718,8 @@ body {
         break-inside: avoid !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        background-size: 210mm 285mm !important;
+        background-size: 794px 1123px !important;
+        background-position: 0 0 !important;
         background-repeat: no-repeat !important;
     }
 
@@ -729,7 +730,7 @@ body {
         break-after: page !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
     }
 
     /* صفحة الظهر: تتبع صفحة الوجه مباشرة بدون فاصل إضافي ولا تفصل بعدها لتفادي أي صفحة بيضاء */
@@ -739,7 +740,7 @@ body {
         break-before: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         margin-top: 0 !important;
     }
 
