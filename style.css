@@ -713,6 +713,8 @@ body {
         background-size: 210mm 297mm !important;
         background-position: 0 0 !important;
         background-repeat: no-repeat !important;
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
     }
 
     /* صفحة الوجه: تفصل صفحة إجبارياً بعد الوجه فقط */
