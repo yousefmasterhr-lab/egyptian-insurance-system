@@ -520,8 +520,6 @@ body {
     width: 794px;
     height: 1123px;
     background-color: white !important;
-    background-size: 794px 1123px;
-    background-repeat: no-repeat;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
     margin: 0 auto;
     border-radius: 8px;
@@ -529,26 +527,27 @@ body {
     transition: transform 0.3s ease;
 }
 
-.a4-page {
-    background-image: url('form_bg.png');
-}
-
-.a4-page-back {
-    background-image: url('form_bg_back.png');
-    margin-top: 30px;
-}
-
-.a4-page-s6 {
-    background-image: url('form_s6_bg.jpg');
-}
-
+.a4-page-back,
 .a4-page-s6-back {
-    background-image: url('form_s6_bg_back.jpg');
     margin-top: 30px;
+}
+
+.form-sheet-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 794px;
+    height: 1123px;
+    object-fit: fill;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 0;
 }
 
 .overlay-input {
     position: absolute;
+    z-index: 1;
     background: rgba(78, 84, 200, 0.05) !important;
     border: 1px dashed rgba(78, 84, 200, 0.3);
     font-size: 14px;
@@ -710,9 +709,20 @@ body {
         box-sizing: border-box !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        background-size: 210mm 297mm !important;
-        background-position: 0 0 !important;
-        background-repeat: no-repeat !important;
+        background: #fff !important;
+        background-image: none !important;
+    }
+
+    .form-sheet-bg {
+        display: block !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        object-fit: fill !important;
+        pointer-events: none !important;
+        z-index: 0 !important;
         image-rendering: -webkit-optimize-contrast !important;
     }
 
@@ -737,6 +747,8 @@ body {
     }
 
     .overlay-input {
+        position: absolute !important;
+        z-index: 1 !important;
         background: transparent !important;
         border: none !important;
         color: #000 !important;
