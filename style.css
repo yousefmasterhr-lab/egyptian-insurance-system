@@ -731,17 +731,17 @@ body {
     .a4-page-s6 {
         page-break-after: always !important;
         break-after: page !important;
-        page-break-before: avoid !important;
-        break-before: avoid !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
     }
 
-    /* صفحة الظهر: تمنع أي فواصل بعدها */
+    /* صفحة الظهر: تتبع صفحة الوجه كصفحة ثانية طبيعية وتمنع أي فواصل بعدها */
     .a4-page-back,
     .a4-page-s6-back {
         margin: 0 !important;
         margin-top: 0 !important;
-        page-break-before: avoid !important;
-        break-before: avoid !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
     }
