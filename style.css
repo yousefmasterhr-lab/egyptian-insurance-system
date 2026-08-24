@@ -3265,7 +3265,7 @@ html[data-theme="dark"] .tour-arrow {
 
 #category_1 {
     top: 123px;
-    right: 255px;
+    right: 250px;
     width: 25px;
     height: 21.4px;
 }
@@ -3295,17 +3295,19 @@ html[data-theme="dark"] .tour-arrow {
     right: 492px;
     width: 254px;
     height: 25.4px;
+    text-align: center;
 }
 
 #applicant_ins_num {
     top: 250px;
-    right: 118px;
+    right: 107px;
     width: 236px;
     height: 27px;
-    letter-spacing: calc(-1ch + 27px);
+    letter-spacing: calc(-1ch + 26px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
+    text-align: left;
 }
 
 #applicant_phone {
@@ -3319,24 +3321,26 @@ html[data-theme="dark"] .tour-arrow {
 
 #applicant_nat_id {
     top: 286px;
-    right: 107px;
-    width: 362px;
+    right: 104px;
+    width: 365px;
     height: 25px;
     letter-spacing: calc(-1ch + 25.8571px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
+    text-align: center;
 }
 
 #emp_ins_num {
     top: 363px;
-    right: 158px;
+    right: 147px;
     width: 235px;
     height: 24px;
-    letter-spacing: calc(-1ch + 26px);
+    letter-spacing: calc(-1ch + 25px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
+    text-align: left;
 }
 
 #emp_name {
@@ -3348,8 +3352,8 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_nat_id {
     top: 395px;
-    right: 153px;
-    width: 361px;
+    right: 151px;
+    width: 365px;
     height: 24px;
     letter-spacing: calc(-1ch + 25.7857px);
     padding-right: 0px;
@@ -3434,7 +3438,7 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_wage_pounds {
     top: 523px;
-    right: 200px;
+    right: 196px;
     width: 165px;
     height: 18px;
     letter-spacing: 18px;
@@ -3445,9 +3449,9 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_comp_wage_pounds {
     top: 525px;
-    right: 489px;
+    right: 480px;
     width: 164px;
-    height: 17px;
+    height: 18px;
     letter-spacing: 18px;
     padding-right: 0px;
     font-family: monospace;
@@ -3546,10 +3550,10 @@ html[data-theme="dark"] .tour-arrow {
 
 #fac_number {
     top: 705px;
-    right: 485px;
+    right: 483px;
     width: 230px;
     height: 23px;
-    letter-spacing: calc(-1ch + 25.5556px);
+    letter-spacing: calc(-1ch + 25px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
