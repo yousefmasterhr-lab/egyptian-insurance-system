@@ -3299,10 +3299,10 @@ html[data-theme="dark"] .tour-arrow {
 
 #applicant_ins_num {
     top: 250px;
-    right: 110px;
+    right: 118px;
     width: 236px;
     height: 27px;
-    letter-spacing: calc(-1ch + 26.2222px);
+    letter-spacing: calc(-1ch + 27px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
@@ -3330,10 +3330,10 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_ins_num {
     top: 363px;
-    right: 151px;
+    right: 163px;
     width: 235px;
     height: 24px;
-    letter-spacing: calc(-1ch + 26.1111px);
+    letter-spacing: calc(-1ch + 26px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
@@ -3380,10 +3380,10 @@ html[data-theme="dark"] .tour-arrow {
 
 #emp_sub_date_day {
     top: 446px;
-    right: 205px;
+    right: 203px;
     width: 46px;
     height: 24px;
-    letter-spacing: calc(-1ch + 23px);
+    letter-spacing: calc(-1ch + 21px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
@@ -3394,7 +3394,7 @@ html[data-theme="dark"] .tour-arrow {
     right: 265px;
     width: 49px;
     height: 24px;
-    letter-spacing: calc(-1ch + 24.5px);
+    letter-spacing: calc(-1ch + 21.5px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
@@ -3405,7 +3405,7 @@ html[data-theme="dark"] .tour-arrow {
     right: 324px;
     width: 93px;
     height: 24px;
-    letter-spacing: calc(-1ch + 23.25px);
+    letter-spacing: calc(-1ch + 21.25px);
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
