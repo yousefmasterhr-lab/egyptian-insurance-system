@@ -2423,7 +2423,6 @@ async function selectEmployeeSearch(employeeId) {
         safeSet('emp_wage_pounds', emp.sub_wage);
         safeSet('emp_comp_wage_pounds', emp.comp_wage);
         safeSet('emp_disability_pct', emp.disability_percent);
-        safeSet('sig_insured', emp.name);
         safeSet('sig_phone', emp.phone);
         
         if (emp.has_disability && emp.disability_date) {
@@ -2830,7 +2829,6 @@ function syncLiveInput(fieldKey, val) {
         case 'emp_name':
             safeSet('emp_name', val);
             safeSet('back_emp_name', val);
-            safeSet('sig_insured', val);
             safeSet('s6_emp_name', val);
             safeSet('s6_back_emp_name', val);
             if (document.querySelector('input[name="live_applicant_type"]:checked')?.value === 'employee') {

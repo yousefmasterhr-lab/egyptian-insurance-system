@@ -3557,6 +3557,7 @@ html[data-theme="dark"] .tour-arrow {
     padding-right: 0px;
     font-family: monospace;
     font-size: 16px;
+    text-align: left;
 }
 
 #res_building {
@@ -3591,12 +3592,6 @@ html[data-theme="dark"] .tour-arrow {
     right: 296px;
     width: 152px;
     height: 25px;
-}
-
-#sig_insured {
-    top: 892px;
-    right: 152px;
-    width: 200px;
 }
 
 #sig_phone {
