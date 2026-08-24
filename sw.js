@@ -2,11 +2,11 @@
 // Service Worker لنظام إدارة التأمينات - دعم PWA والتحديث التلقائي الفوري
 // ==========================================================================
 
-const CACHE_NAME = 'insurance-app-v7.0';
+const CACHE_NAME = 'insurance-app-v7.1';
 const STATIC_ASSETS = [
     './',
     './index.html',
-    './style.css?v=7.0',
+    './style.css?v=7.1',
     './script.js?v=4.4',
     './auth.js?v=4.2',
     './dashboard.js?v=4.2',
